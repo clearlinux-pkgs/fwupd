@@ -1,0 +1,19 @@
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+gpgme-dev
+libgpg-error-dev
+pygobject-dev
+pygobject
+gobject-introspection-dev
+python3-dev
+Pillow
+pycairo
+vala
+vala
+help2man
+gtk-doc
+libxslt
+gcab
+fontconfig
+clear-font
+font-bitstream-type1

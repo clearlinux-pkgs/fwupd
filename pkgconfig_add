@@ -1,0 +1,16 @@
+# This file contains additional pkgconfig build requirements that did
+# not get picked up automatically. One name per line, no whitespace.
+gio-2.0
+polkit-gobject-1
+gudev-1.0
+appstream-glib
+gusb
+sqlite3
+json-glib-1.0
+libsoup-2.4
+gnutls
+cairo
+udev
+libelf
+colorhug
+fwup
