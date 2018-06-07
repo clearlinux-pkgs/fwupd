@@ -14,6 +14,7 @@ libfwupd.so.2:LIBFWUPD_1.0.0
 libfwupd.so.2:LIBFWUPD_1.0.3
 libfwupd.so.2:LIBFWUPD_1.0.4
 libfwupd.so.2:LIBFWUPD_1.0.7
+libfwupd.so.2:LIBFWUPD_1.0.8
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -64,6 +65,8 @@ libfwupd.so.2:fwupd_device_get_icons
 libfwupd.so.2:fwupd_device_get_id
 libfwupd.so.2:fwupd_device_get_modified
 libfwupd.so.2:fwupd_device_get_name
+libfwupd.so.2:fwupd_device_get_parent
+libfwupd.so.2:fwupd_device_get_parent_id
 libfwupd.so.2:fwupd_device_get_plugin
 libfwupd.so.2:fwupd_device_get_release_default
 libfwupd.so.2:fwupd_device_get_releases
@@ -87,6 +90,8 @@ libfwupd.so.2:fwupd_device_set_flashes_left
 libfwupd.so.2:fwupd_device_set_id
 libfwupd.so.2:fwupd_device_set_modified
 libfwupd.so.2:fwupd_device_set_name
+libfwupd.so.2:fwupd_device_set_parent
+libfwupd.so.2:fwupd_device_set_parent_id
 libfwupd.so.2:fwupd_device_set_plugin
 libfwupd.so.2:fwupd_device_set_summary
 libfwupd.so.2:fwupd_device_set_update_error

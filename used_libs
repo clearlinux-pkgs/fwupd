@@ -1,8 +1,6 @@
 libappstream-glib.so.8
 libarchive.so.13
 libc.so.6
-libcolord.so.2
-libcolorhug.so.2
 libefivar.so.1
 libelf.so.1
 libfwup.so.1
