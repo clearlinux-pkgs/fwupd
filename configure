@@ -1,1 +1,1 @@
--Dplugin_dell=false -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/
+-Dgtkdoc=false --sysconfdir=/usr/share/fwupd/

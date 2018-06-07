@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.0.7
-Release  : 7
+Release  : 8
 URL      : https://github.com/hughsie/fwupd/archive/1.0.7.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.0.7.tar.gz
 Summary  : No detailed summary available
@@ -16,7 +16,7 @@ Requires: fwupd-autostart
 Requires: fwupd-lib
 Requires: fwupd-data
 Requires: fwupd-locales
-Requires: fwupd-doc
+Requires: fwupd-man
 BuildRequires : Pillow
 BuildRequires : clear-font
 BuildRequires : font-bitstream-type1
@@ -27,6 +27,7 @@ BuildRequires : gpgme-dev
 BuildRequires : gtk-doc
 BuildRequires : help2man
 BuildRequires : libgpg-error-dev
+BuildRequires : libsmbios-dev
 BuildRequires : libxslt
 BuildRequires : meson
 BuildRequires : ninja
@@ -68,6 +69,7 @@ Summary: bin components for the fwupd package.
 Group: Binaries
 Requires: fwupd-data
 Requires: fwupd-config
+Requires: fwupd-man
 
 %description bin
 bin components for the fwupd package.
@@ -101,14 +103,6 @@ Provides: fwupd-devel
 dev components for the fwupd package.
 
 
-%package doc
-Summary: doc components for the fwupd package.
-Group: Documentation
-
-%description doc
-doc components for the fwupd package.
-
-
 %package lib
 Summary: lib components for the fwupd package.
 Group: Libraries
@@ -126,6 +120,14 @@ Group: Default
 locales components for the fwupd package.
 
 
+%package man
+Summary: man components for the fwupd package.
+Group: Default
+
+%description man
+man components for the fwupd package.
+
+
 %prep
 %setup -q -n fwupd-1.0.7
 
@@ -134,8 +136,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1525806608
-CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dplugin_dell=false -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
+export SOURCE_DATE_EPOCH=1528377894
+CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 
 %install
@@ -184,6 +186,7 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/share/fwupd/pki/fwupd/LVFS-CA.pem
 /usr/share/fwupd/quirks.d/csr-aiaiai-h05.quirk
 /usr/share/fwupd/quirks.d/csr-aiaiai-h60.quirk
+/usr/share/fwupd/quirks.d/dell.quirk
 /usr/share/fwupd/quirks.d/dfu.quirk
 /usr/share/fwupd/quirks.d/ebitdo.quirk
 /usr/share/fwupd/remotes.d/fwupd/metadata.xml
@@ -356,16 +359,13 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/libfwupd.so
 /usr/lib64/pkgconfig/fwupd.pc
 
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
-
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/fwupd-plugins-3/libfu_plugin_altos.so
 /usr/lib64/fwupd-plugins-3/libfu_plugin_amt.so
 /usr/lib64/fwupd-plugins-3/libfu_plugin_colorhug.so
 /usr/lib64/fwupd-plugins-3/libfu_plugin_csr.so
+/usr/lib64/fwupd-plugins-3/libfu_plugin_dell.so
 /usr/lib64/fwupd-plugins-3/libfu_plugin_dfu.so
 /usr/lib64/fwupd-plugins-3/libfu_plugin_ebitdo.so
 /usr/lib64/fwupd-plugins-3/libfu_plugin_nitrokey.so
@@ -379,6 +379,11 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/lib64/fwupd-plugins-3/libfu_plugin_upower.so
 /usr/lib64/libfwupd.so.2
 /usr/lib64/libfwupd.so.2.0.0
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man1/dfu-tool.1
+/usr/share/man/man1/fwupdmgr.1
 
 %files locales -f fwupd.lang
 %defattr(-,root,root,-)
