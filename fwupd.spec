@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.1.0
-Release  : 10
+Release  : 11
 URL      : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Summary  : No detailed summary available
@@ -38,7 +38,7 @@ BuildRequires : ninja
 BuildRequires : pkgconfig(appstream-glib)
 BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(colorhug)
-BuildRequires : pkgconfig(fwup)
+BuildRequires : pkgconfig(efivar)
 BuildRequires : pkgconfig(gio-2.0)
 BuildRequires : pkgconfig(gnutls)
 BuildRequires : pkgconfig(gudev-1.0)
@@ -151,7 +151,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531444070
+export SOURCE_DATE_EPOCH=1531449002
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 
