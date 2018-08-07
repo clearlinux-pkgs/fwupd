@@ -1,0 +1,39 @@
+From 015f08cdaf433670c44a669c7222ce2088db9216 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Tue, 7 Aug 2018 22:54:59 +0000
+Subject: [PATCH] Fixups for Clear Linux stateless settings
+
+---
+ data/fwupd.service.in | 3 ++-
+ data/meson.build      | 1 -
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/data/fwupd.service.in b/data/fwupd.service.in
+index 996ff4c..706b10b 100644
+--- a/data/fwupd.service.in
++++ b/data/fwupd.service.in
+@@ -1,7 +1,8 @@
+ [Unit]
+ Description=Firmware update daemon
+ Documentation=https://fwupd.org/
+-After=dbus.service
++Requires=boot.mount
++After=dbus.service boot.mount
+ Before=gdm.service
+ 
+ [Service]
+diff --git a/data/meson.build b/data/meson.build
+index 51384d4..0517a2b 100644
+--- a/data/meson.build
++++ b/data/meson.build
+@@ -38,7 +38,6 @@ if get_option('systemd')
+ 
+   rw_directories = []
+   rw_directories += join_paths (localstatedir, 'lib', 'fwupd')
+-  rw_directories += join_paths (default_sysconfdir, 'fwupd', 'remotes.d')
+   if get_option('plugin_uefi')
+     rw_directories += ['-/boot/efi', '-/boot', '-/efi']
+   endif
+-- 
+2.18.0
+

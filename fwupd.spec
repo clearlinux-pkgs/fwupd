@@ -4,21 +4,22 @@
 #
 Name     : fwupd
 Version  : 1.1.0
-Release  : 11
+Release  : 12
 URL      : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : BSD-3-Clause LGPL-2.1
+License  : BSD-3-Clause CC0-1.0 LGPL-2.1
 Requires: fwupd-bin
 Requires: fwupd-config
-Requires: fwupd-autostart
 Requires: fwupd-lib
 Requires: fwupd-data
 Requires: fwupd-license
 Requires: fwupd-locales
 Requires: fwupd-man
 BuildRequires : Pillow
+BuildRequires : bash-completion-dev
+BuildRequires : buildreq-meson
 BuildRequires : clear-font
 BuildRequires : font-bitstream-type1
 BuildRequires : fontconfig
@@ -33,8 +34,6 @@ BuildRequires : help2man
 BuildRequires : libgpg-error-dev
 BuildRequires : libsmbios-dev
 BuildRequires : libxslt
-BuildRequires : meson
-BuildRequires : ninja
 BuildRequires : pkgconfig(appstream-glib)
 BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(colorhug)
@@ -53,21 +52,13 @@ BuildRequires : popt-dev
 BuildRequires : pycairo
 BuildRequires : pygobject
 BuildRequires : pygobject-dev
-BuildRequires : python3
 BuildRequires : python3-dev
 BuildRequires : vala
+Patch1: 0001-Fixups-for-Clear-Linux-stateless-settings.patch
 
 %description
 This project aims to make updating firmware on Linux automatic, safe and
 reliable. Additional information is available at the website: https://fwupd.org
-
-%package autostart
-Summary: autostart components for the fwupd package.
-Group: Default
-
-%description autostart
-autostart components for the fwupd package.
-
 
 %package bin
 Summary: bin components for the fwupd package.
@@ -109,6 +100,15 @@ Provides: fwupd-devel
 dev components for the fwupd package.
 
 
+%package doc
+Summary: doc components for the fwupd package.
+Group: Documentation
+Requires: fwupd-man
+
+%description doc
+doc components for the fwupd package.
+
+
 %package lib
 Summary: lib components for the fwupd package.
 Group: Libraries
@@ -145,30 +145,33 @@ man components for the fwupd package.
 
 %prep
 %setup -q -n fwupd-1.1.0
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531449002
+export SOURCE_DATE_EPOCH=1533682686
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 
 %install
 mkdir -p %{buildroot}/usr/share/doc/fwupd
 cp COPYING %{buildroot}/usr/share/doc/fwupd/COPYING
+cp contrib/debian/copyright %{buildroot}/usr/share/doc/fwupd/contrib_debian_copyright
 cp data/tests/thunderbolt/COPYING %{buildroot}/usr/share/doc/fwupd/data_tests_thunderbolt_COPYING
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang fwupd
+## install_append content
+install -D -m 0644 %{buildroot}/usr/share/fwupd/dbus-1/system.d/org.freedesktop.fwupd.conf %{buildroot}/usr/share/dbus-1/system.d/org.freedesktop.fwupd.conf
+rm -fr %{buildroot}/usr/share/fwupd/dbus-1
+rm %{buildroot}/usr/lib/systemd/system/system-update.target.wants/fwupd-offline-update.service
+## install_append end
 
 %files
 %defattr(-,root,root,-)
 %exclude /var/lib/fwupd/builder/README.md
-
-%files autostart
-%defattr(-,root,root,-)
-/usr/lib/systemd/system/system-update.target.wants/fwupd-offline-update.service
 
 %files bin
 %defattr(-,root,root,-)
@@ -181,7 +184,6 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files config
 %defattr(-,root,root,-)
-%exclude /usr/lib/systemd/system/system-update.target.wants/fwupd-offline-update.service
 /usr/lib/systemd/system/fwupd-offline-update.service
 /usr/lib/systemd/system/fwupd.service
 /usr/lib/udev/rules.d/90-fwupd-devices.rules
@@ -189,9 +191,11 @@ DESTDIR=%{buildroot} ninja -C builddir install
 %files data
 %defattr(-,root,root,-)
 /usr/lib64/girepository-1.0/Fwupd-2.0.typelib
+/usr/share/bash-completion/completions/fwupdmgr
+/usr/share/bash-completion/completions/fwupdtool
 /usr/share/dbus-1/interfaces/org.freedesktop.fwupd.xml
 /usr/share/dbus-1/system-services/org.freedesktop.fwupd.service
-/usr/share/fwupd/dbus-1/system.d/org.freedesktop.fwupd.conf
+/usr/share/dbus-1/system.d/org.freedesktop.fwupd.conf
 /usr/share/fwupd/firmware-packager
 /usr/share/fwupd/fwupd/daemon.conf
 /usr/share/fwupd/fwupd/remotes.d/fwupd.conf
@@ -391,6 +395,10 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/include/fwupd-1/libfwupd/fwupd-version.h
 /usr/lib64/libfwupd.so
 /usr/lib64/pkgconfig/fwupd.pc
+
+%files doc
+%defattr(0644,root,root,0755)
+%doc /usr/share/doc/fwupd/*
 
 %files lib
 %defattr(-,root,root,-)
