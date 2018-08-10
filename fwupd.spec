@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.1.0
-Release  : 13
+Release  : 14
 URL      : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Summary  : No detailed summary available
@@ -12,6 +12,7 @@ Group    : Development/Tools
 License  : BSD-3-Clause CC0-1.0 LGPL-2.1
 Requires: fwupd-bin
 Requires: fwupd-config
+Requires: fwupd-autostart
 Requires: fwupd-lib
 Requires: fwupd-data
 Requires: fwupd-license
@@ -59,6 +60,14 @@ Patch1: 0001-Fixups-for-Clear-Linux-stateless-settings.patch
 %description
 This project aims to make updating firmware on Linux automatic, safe and
 reliable. Additional information is available at the website: https://fwupd.org
+
+%package autostart
+Summary: autostart components for the fwupd package.
+Group: Default
+
+%description autostart
+autostart components for the fwupd package.
+
 
 %package bin
 Summary: bin components for the fwupd package.
@@ -152,7 +161,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1533756788
+export SOURCE_DATE_EPOCH=1533923678
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 
@@ -167,11 +176,17 @@ DESTDIR=%{buildroot} ninja -C builddir install
 install -D -m 0644 %{buildroot}/usr/share/fwupd/dbus-1/system.d/org.freedesktop.fwupd.conf %{buildroot}/usr/share/dbus-1/system.d/org.freedesktop.fwupd.conf
 rm -fr %{buildroot}/usr/share/fwupd/dbus-1
 rm %{buildroot}/usr/lib/systemd/system/system-update.target.wants/fwupd-offline-update.service
+mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/fwupd.service
 ## install_append end
 
 %files
 %defattr(-,root,root,-)
 %exclude /var/lib/fwupd/builder/README.md
+
+%files autostart
+%defattr(-,root,root,-)
+/usr/lib/systemd/system/multi-user.target.wants/fwupd.service
 
 %files bin
 %defattr(-,root,root,-)
@@ -184,6 +199,7 @@ rm %{buildroot}/usr/lib/systemd/system/system-update.target.wants/fwupd-offline-
 
 %files config
 %defattr(-,root,root,-)
+%exclude /usr/lib/systemd/system/multi-user.target.wants/fwupd.service
 /usr/lib/systemd/system/fwupd-offline-update.service
 /usr/lib/systemd/system/fwupd.service
 /usr/lib/udev/rules.d/90-fwupd-devices.rules
