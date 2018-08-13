@@ -18,7 +18,7 @@ index 996ff4c..bb3f236 100644
  
  [Service]
 +MountAPIVFS=yes
-+PreExecStart=@bindir@/systemctl start boot.mount
++ExecStartPre=@bindir@/systemctl start boot.mount
  Type=dbus
  BusName=org.freedesktop.fwupd
  ExecStart=@libexecdir@/fwupd/fwupd
