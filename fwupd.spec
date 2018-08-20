@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.1.0
-Release  : 15
+Release  : 16
 URL      : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Summary  : No detailed summary available
