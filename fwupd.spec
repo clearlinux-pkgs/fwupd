@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.1.0
-Release  : 16
+Release  : 17
 URL      : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.0.tar.gz
 Summary  : No detailed summary available
@@ -45,6 +45,7 @@ BuildRequires : pkgconfig(gudev-1.0)
 BuildRequires : pkgconfig(gusb)
 BuildRequires : pkgconfig(json-glib-1.0)
 BuildRequires : pkgconfig(libelf)
+BuildRequires : pkgconfig(libgcab-1.0)
 BuildRequires : pkgconfig(libsoup-2.4)
 BuildRequires : pkgconfig(polkit-gobject-1)
 BuildRequires : pkgconfig(sqlite3)
@@ -161,7 +162,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534191679
+export SOURCE_DATE_EPOCH=1535153435
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 

@@ -1,3 +1,4 @@
 1.1.0
-pkgconfig(efivar)
 bash-completion-dev
+pkgconfig(efivar)
+pkgconfig(libgcab-1.0)

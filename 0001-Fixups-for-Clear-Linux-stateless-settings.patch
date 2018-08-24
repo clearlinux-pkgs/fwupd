@@ -1,13 +1,13 @@
-From 3be796b9859de48116e5d3d5d022cc933cb62509 Mon Sep 17 00:00:00 2001
+From 9dfd130b637a9cc8fabc99bddfd1216b3667d250 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Tue, 7 Aug 2018 22:54:59 +0000
 Subject: [PATCH] Fixups for Clear Linux stateless settings
 
 ---
  data/fwupd.service.in  | 3 ++-
- data/meson.build       | 1 -
+ data/meson.build       | 3 +--
  plugins/uefi/uefi.conf | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/data/fwupd.service.in b/data/fwupd.service.in
 index 996ff4c..28c15c9 100644
@@ -25,14 +25,16 @@ index 996ff4c..28c15c9 100644
  [Service]
  Type=dbus
 diff --git a/data/meson.build b/data/meson.build
-index 51384d4..0517a2b 100644
+index 51384d4..80c9667 100644
 --- a/data/meson.build
 +++ b/data/meson.build
-@@ -38,7 +38,6 @@ if get_option('systemd')
+@@ -37,8 +37,7 @@ if get_option('systemd')
+   con2.set('datadir', datadir)
  
    rw_directories = []
-   rw_directories += join_paths (localstatedir, 'lib', 'fwupd')
+-  rw_directories += join_paths (localstatedir, 'lib', 'fwupd')
 -  rw_directories += join_paths (default_sysconfdir, 'fwupd', 'remotes.d')
++  rw_directories += '-' + join_paths (localstatedir, 'lib', 'fwupd')
    if get_option('plugin_uefi')
      rw_directories += ['-/boot/efi', '-/boot', '-/efi']
    endif
