@@ -16,6 +16,7 @@ libfwupd.so.2:LIBFWUPD_1.0.4
 libfwupd.so.2:LIBFWUPD_1.0.7
 libfwupd.so.2:LIBFWUPD_1.0.8
 libfwupd.so.2:LIBFWUPD_1.1.0
+libfwupd.so.2:LIBFWUPD_1.1.1
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -52,6 +53,7 @@ libfwupd.so.2:fwupd_device_add_flag
 libfwupd.so.2:fwupd_device_add_guid
 libfwupd.so.2:fwupd_device_add_icon
 libfwupd.so.2:fwupd_device_add_release
+libfwupd.so.2:fwupd_device_compare
 libfwupd.so.2:fwupd_device_flag_from_string
 libfwupd.so.2:fwupd_device_flag_to_string
 libfwupd.so.2:fwupd_device_from_variant
