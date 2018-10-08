@@ -2,3 +2,4 @@
 bash-completion-dev
 pkgconfig(efivar)
 pkgconfig(libgcab-1.0)
+valgrind

@@ -4,20 +4,22 @@
 #
 Name     : fwupd
 Version  : 1.1.2
-Release  : 19
+Release  : 20
 URL      : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause CC0-1.0 LGPL-2.1
-Requires: fwupd-bin
-Requires: fwupd-config
-Requires: fwupd-autostart
-Requires: fwupd-lib
-Requires: fwupd-data
-Requires: fwupd-license
-Requires: fwupd-locales
-Requires: fwupd-man
+Requires: fwupd-autostart = %{version}-%{release}
+Requires: fwupd-bin = %{version}-%{release}
+Requires: fwupd-config = %{version}-%{release}
+Requires: fwupd-data = %{version}-%{release}
+Requires: fwupd-lib = %{version}-%{release}
+Requires: fwupd-libexec = %{version}-%{release}
+Requires: fwupd-license = %{version}-%{release}
+Requires: fwupd-locales = %{version}-%{release}
+Requires: fwupd-man = %{version}-%{release}
+Requires: gsettings-desktop-schemas
 BuildRequires : Pillow
 BuildRequires : bash-completion-dev
 BuildRequires : buildreq-meson
@@ -56,6 +58,7 @@ BuildRequires : pygobject
 BuildRequires : pygobject-dev
 BuildRequires : python3-dev
 BuildRequires : vala
+BuildRequires : valgrind
 Patch1: 0001-Fixups-for-Clear-Linux-stateless-settings.patch
 
 %description
@@ -73,10 +76,11 @@ autostart components for the fwupd package.
 %package bin
 Summary: bin components for the fwupd package.
 Group: Binaries
-Requires: fwupd-data
-Requires: fwupd-config
-Requires: fwupd-license
-Requires: fwupd-man
+Requires: fwupd-data = %{version}-%{release}
+Requires: fwupd-libexec = %{version}-%{release}
+Requires: fwupd-config = %{version}-%{release}
+Requires: fwupd-license = %{version}-%{release}
+Requires: fwupd-man = %{version}-%{release}
 
 %description bin
 bin components for the fwupd package.
@@ -101,32 +105,34 @@ data components for the fwupd package.
 %package dev
 Summary: dev components for the fwupd package.
 Group: Development
-Requires: fwupd-lib
-Requires: fwupd-bin
-Requires: fwupd-data
-Provides: fwupd-devel
+Requires: fwupd-lib = %{version}-%{release}
+Requires: fwupd-bin = %{version}-%{release}
+Requires: fwupd-data = %{version}-%{release}
+Provides: fwupd-devel = %{version}-%{release}
 
 %description dev
 dev components for the fwupd package.
 
 
-%package doc
-Summary: doc components for the fwupd package.
-Group: Documentation
-Requires: fwupd-man
-
-%description doc
-doc components for the fwupd package.
-
-
 %package lib
 Summary: lib components for the fwupd package.
 Group: Libraries
-Requires: fwupd-data
-Requires: fwupd-license
+Requires: fwupd-data = %{version}-%{release}
+Requires: fwupd-libexec = %{version}-%{release}
+Requires: fwupd-license = %{version}-%{release}
 
 %description lib
 lib components for the fwupd package.
+
+
+%package libexec
+Summary: libexec components for the fwupd package.
+Group: Default
+Requires: fwupd-config = %{version}-%{release}
+Requires: fwupd-license = %{version}-%{release}
+
+%description libexec
+libexec components for the fwupd package.
 
 
 %package license
@@ -162,15 +168,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1536634037
+export SOURCE_DATE_EPOCH=1539034494
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 
 %install
-mkdir -p %{buildroot}/usr/share/doc/fwupd
-cp COPYING %{buildroot}/usr/share/doc/fwupd/COPYING
-cp contrib/debian/signing-template/copyright %{buildroot}/usr/share/doc/fwupd/contrib_debian_signing-template_copyright
-cp data/tests/thunderbolt/COPYING %{buildroot}/usr/share/doc/fwupd/data_tests_thunderbolt_COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/fwupd
+cp COPYING %{buildroot}/usr/share/package-licenses/fwupd/COPYING
+cp contrib/debian/signing-template/copyright %{buildroot}/usr/share/package-licenses/fwupd/contrib_debian_signing-template_copyright
+cp data/tests/thunderbolt/COPYING %{buildroot}/usr/share/package-licenses/fwupd/data_tests_thunderbolt_COPYING
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang fwupd
 ## install_append content
@@ -193,10 +199,6 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 %defattr(-,root,root,-)
 /usr/bin/dfu-tool
 /usr/bin/fwupdmgr
-/usr/libexec/fwupd/efi/fwupdx64.efi
-/usr/libexec/fwupd/fwupd
-/usr/libexec/fwupd/fwupdate
-/usr/libexec/fwupd/fwupdtool
 
 %files config
 %defattr(-,root,root,-)
@@ -399,6 +401,7 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 /usr/share/locale/zh_TW/LC_IMAGES/fwupd-7680-4320.bmp.gz
 /usr/share/locale/zh_TW/LC_IMAGES/fwupd-800-600.bmp.gz
 /usr/share/metainfo/org.freedesktop.fwupd.metainfo.xml
+/usr/share/package-licenses/fwupd/contrib_debian_signing-template_copyright
 /usr/share/polkit-1/actions/org.freedesktop.fwupd.policy
 /usr/share/polkit-1/rules.d/org.freedesktop.fwupd.rules
 /usr/share/vala/vapi/fwupd.deps
@@ -418,10 +421,6 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 /usr/include/fwupd-1/libfwupd/fwupd-version.h
 /usr/lib64/libfwupd.so
 /usr/lib64/pkgconfig/fwupd.pc
-
-%files doc
-%defattr(0644,root,root,0755)
-%doc /usr/share/doc/fwupd/*
 
 %files lib
 %defattr(-,root,root,-)
@@ -450,13 +449,20 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 /usr/lib64/libfwupd.so.2
 /usr/lib64/libfwupd.so.2.0.0
 
-%files license
+%files libexec
 %defattr(-,root,root,-)
-/usr/share/doc/fwupd/COPYING
-/usr/share/doc/fwupd/data_tests_thunderbolt_COPYING
+/usr/libexec/fwupd/efi/fwupdx64.efi
+/usr/libexec/fwupd/fwupd
+/usr/libexec/fwupd/fwupdate
+/usr/libexec/fwupd/fwupdtool
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/fwupd/COPYING
+/usr/share/package-licenses/fwupd/data_tests_thunderbolt_COPYING
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/dfu-tool.1
 /usr/share/man/man1/fwupdmgr.1
 
