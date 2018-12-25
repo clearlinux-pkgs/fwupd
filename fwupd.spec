@@ -4,13 +4,12 @@
 #
 Name     : fwupd
 Version  : 1.1.2
-Release  : 20
+Release  : 21
 URL      : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause CC0-1.0 LGPL-2.1
-Requires: fwupd-autostart = %{version}-%{release}
 Requires: fwupd-bin = %{version}-%{release}
 Requires: fwupd-config = %{version}-%{release}
 Requires: fwupd-data = %{version}-%{release}
@@ -19,6 +18,7 @@ Requires: fwupd-libexec = %{version}-%{release}
 Requires: fwupd-license = %{version}-%{release}
 Requires: fwupd-locales = %{version}-%{release}
 Requires: fwupd-man = %{version}-%{release}
+Requires: fwupd-services = %{version}-%{release}
 Requires: gsettings-desktop-schemas
 BuildRequires : Pillow
 BuildRequires : bash-completion-dev
@@ -81,6 +81,7 @@ Requires: fwupd-libexec = %{version}-%{release}
 Requires: fwupd-config = %{version}-%{release}
 Requires: fwupd-license = %{version}-%{release}
 Requires: fwupd-man = %{version}-%{release}
+Requires: fwupd-services = %{version}-%{release}
 
 %description bin
 bin components for the fwupd package.
@@ -159,6 +160,14 @@ Group: Default
 man components for the fwupd package.
 
 
+%package services
+Summary: services components for the fwupd package.
+Group: Systemd services
+
+%description services
+services components for the fwupd package.
+
+
 %prep
 %setup -q -n fwupd-1.1.2
 %patch1 -p1
@@ -168,7 +177,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1539034494
+export SOURCE_DATE_EPOCH=1545696490
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 
@@ -202,9 +211,6 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 
 %files config
 %defattr(-,root,root,-)
-%exclude /usr/lib/systemd/system/multi-user.target.wants/fwupd.service
-/usr/lib/systemd/system/fwupd-offline-update.service
-/usr/lib/systemd/system/fwupd.service
 /usr/lib/udev/rules.d/90-fwupd-devices.rules
 
 %files data
@@ -401,7 +407,6 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 /usr/share/locale/zh_TW/LC_IMAGES/fwupd-7680-4320.bmp.gz
 /usr/share/locale/zh_TW/LC_IMAGES/fwupd-800-600.bmp.gz
 /usr/share/metainfo/org.freedesktop.fwupd.metainfo.xml
-/usr/share/package-licenses/fwupd/contrib_debian_signing-template_copyright
 /usr/share/polkit-1/actions/org.freedesktop.fwupd.policy
 /usr/share/polkit-1/rules.d/org.freedesktop.fwupd.rules
 /usr/share/vala/vapi/fwupd.deps
@@ -459,12 +464,19 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/fwupd/COPYING
+/usr/share/package-licenses/fwupd/contrib_debian_signing-template_copyright
 /usr/share/package-licenses/fwupd/data_tests_thunderbolt_COPYING
 
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/dfu-tool.1
 /usr/share/man/man1/fwupdmgr.1
+
+%files services
+%defattr(-,root,root,-)
+%exclude /usr/lib/systemd/system/multi-user.target.wants/fwupd.service
+/usr/lib/systemd/system/fwupd-offline-update.service
+/usr/lib/systemd/system/fwupd.service
 
 %files locales -f fwupd.lang
 %defattr(-,root,root,-)
