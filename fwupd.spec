@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.1.2
-Release  : 21
+Release  : 22
 URL      : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Summary  : No detailed summary available
@@ -24,7 +24,7 @@ BuildRequires : Pillow
 BuildRequires : bash-completion-dev
 BuildRequires : buildreq-meson
 BuildRequires : clear-font
-BuildRequires : font-bitstream-type1
+BuildRequires : xorg-fonts
 BuildRequires : fontconfig
 BuildRequires : gcab
 BuildRequires : glibc-bin
