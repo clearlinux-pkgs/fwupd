@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.1.2
-Release  : 22
+Release  : 23
 URL      : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Summary  : No detailed summary available
@@ -19,12 +19,12 @@ Requires: fwupd-license = %{version}-%{release}
 Requires: fwupd-locales = %{version}-%{release}
 Requires: fwupd-man = %{version}-%{release}
 Requires: fwupd-services = %{version}-%{release}
+Requires: glib
 Requires: gsettings-desktop-schemas
 BuildRequires : Pillow
 BuildRequires : bash-completion-dev
 BuildRequires : buildreq-meson
 BuildRequires : clear-font
-BuildRequires : xorg-fonts
 BuildRequires : fontconfig
 BuildRequires : gcab
 BuildRequires : glibc-bin
@@ -80,7 +80,6 @@ Requires: fwupd-data = %{version}-%{release}
 Requires: fwupd-libexec = %{version}-%{release}
 Requires: fwupd-config = %{version}-%{release}
 Requires: fwupd-license = %{version}-%{release}
-Requires: fwupd-man = %{version}-%{release}
 Requires: fwupd-services = %{version}-%{release}
 
 %description bin
@@ -177,7 +176,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1545696490
+export SOURCE_DATE_EPOCH=1551482539
+export LDFLAGS="${LDFLAGS} -fno-lto"
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 

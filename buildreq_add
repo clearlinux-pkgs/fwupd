@@ -16,7 +16,6 @@ libxslt
 gcab
 fontconfig
 clear-font
-font-bitstream-type1
 libsmbios-dev
 gnu-efi-dev
 gnu-efi
