@@ -4,10 +4,10 @@
 #
 Name     : fwupd
 Version  : 1.1.2
-Release  : 23
+Release  : 24
 URL      : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
-Summary  : No detailed summary available
+Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
 License  : BSD-3-Clause CC0-1.0 LGPL-2.1
 Requires: fwupd-bin = %{version}-%{release}
@@ -109,9 +109,18 @@ Requires: fwupd-lib = %{version}-%{release}
 Requires: fwupd-bin = %{version}-%{release}
 Requires: fwupd-data = %{version}-%{release}
 Provides: fwupd-devel = %{version}-%{release}
+Requires: fwupd = %{version}-%{release}
 
 %description dev
 dev components for the fwupd package.
+
+
+%package extras
+Summary: extras components for the fwupd package.
+Group: Default
+
+%description extras
+extras components for the fwupd package.
 
 
 %package lib
@@ -176,7 +185,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551482539
+export SOURCE_DATE_EPOCH=1552598961
 export LDFLAGS="${LDFLAGS} -fno-lto"
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
@@ -427,6 +436,10 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 /usr/lib64/libfwupd.so
 /usr/lib64/pkgconfig/fwupd.pc
 
+%files extras
+%defattr(-,root,root,-)
+/usr/libexec/fwupd/fwupd
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/fwupd-plugins-3/libfu_plugin_altos.so
@@ -456,8 +469,8 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 
 %files libexec
 %defattr(-,root,root,-)
+%exclude /usr/libexec/fwupd/fwupd
 /usr/libexec/fwupd/efi/fwupdx64.efi
-/usr/libexec/fwupd/fwupd
 /usr/libexec/fwupd/fwupdate
 /usr/libexec/fwupd/fwupdtool
 
