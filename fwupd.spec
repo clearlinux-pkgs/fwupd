@@ -4,10 +4,10 @@
 #
 Name     : fwupd
 Version  : 1.1.2
-Release  : 24
+Release  : 25
 URL      : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.1.2.tar.gz
-Summary  : A simple daemon to allow session software to update firmware
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause CC0-1.0 LGPL-2.1
 Requires: fwupd-bin = %{version}-%{release}
@@ -80,6 +80,7 @@ Requires: fwupd-data = %{version}-%{release}
 Requires: fwupd-libexec = %{version}-%{release}
 Requires: fwupd-config = %{version}-%{release}
 Requires: fwupd-license = %{version}-%{release}
+Requires: fwupd-man = %{version}-%{release}
 Requires: fwupd-services = %{version}-%{release}
 
 %description bin
@@ -109,7 +110,6 @@ Requires: fwupd-lib = %{version}-%{release}
 Requires: fwupd-bin = %{version}-%{release}
 Requires: fwupd-data = %{version}-%{release}
 Provides: fwupd-devel = %{version}-%{release}
-Requires: fwupd = %{version}-%{release}
 
 %description dev
 dev components for the fwupd package.
@@ -185,8 +185,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1552598961
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export SOURCE_DATE_EPOCH=1555696556
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --prefix /usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
 ninja -v -C builddir
 
@@ -438,6 +437,7 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 
 %files extras
 %defattr(-,root,root,-)
+/usr/lib/systemd/system/fwupd.service
 /usr/libexec/fwupd/fwupd
 
 %files lib
@@ -487,9 +487,9 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 
 %files services
 %defattr(-,root,root,-)
+%exclude /usr/lib/systemd/system/fwupd.service
 %exclude /usr/lib/systemd/system/multi-user.target.wants/fwupd.service
 /usr/lib/systemd/system/fwupd-offline-update.service
-/usr/lib/systemd/system/fwupd.service
 
 %files locales -f fwupd.lang
 %defattr(-,root,root,-)
