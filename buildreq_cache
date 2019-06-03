@@ -1,5 +1,8 @@
-1.1.2
+1.2.9
 bash-completion-dev
 pkgconfig(efivar)
 pkgconfig(libgcab-1.0)
+pkgconfig(umockdev-1.0)
+pkgconfig(valgrind)
+pkgconfig(xmlb)
 valgrind

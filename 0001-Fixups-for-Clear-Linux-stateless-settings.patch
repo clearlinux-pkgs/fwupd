@@ -9,36 +9,6 @@ Subject: [PATCH] Fixups for Clear Linux stateless settings
  plugins/uefi/uefi.conf | 2 +-
  3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/data/fwupd.service.in b/data/fwupd.service.in
-index 996ff4c..28c15c9 100644
---- a/data/fwupd.service.in
-+++ b/data/fwupd.service.in
-@@ -1,8 +1,9 @@
- [Unit]
- Description=Firmware update daemon
- Documentation=https://fwupd.org/
--After=dbus.service
-+After=dbus.service boot.mount
- Before=gdm.service
-+Requires=boot.mount
- 
- [Service]
- Type=dbus
-diff --git a/data/meson.build b/data/meson.build
-index 51384d4..80c9667 100644
---- a/data/meson.build
-+++ b/data/meson.build
-@@ -37,8 +37,7 @@ if get_option('systemd')
-   con2.set('datadir', datadir)
- 
-   rw_directories = []
--  rw_directories += join_paths (localstatedir, 'lib', 'fwupd')
--  rw_directories += join_paths (default_sysconfdir, 'fwupd', 'remotes.d')
-+  rw_directories += '-' + join_paths (localstatedir, 'lib', 'fwupd')
-   if get_option('plugin_uefi')
-     rw_directories += ['-/boot/efi', '-/boot', '-/efi']
-   endif
-diff --git a/plugins/uefi/uefi.conf b/plugins/uefi/uefi.conf
 index 9247db8..55a758c 100644
 --- a/plugins/uefi/uefi.conf
 +++ b/plugins/uefi/uefi.conf
