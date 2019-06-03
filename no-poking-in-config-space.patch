@@ -1,0 +1,20 @@
+we prefer to not poke random devices in sysfs/config space during boot
+
+
+--- fwupd-1.2.9/plugins/udev/fu-plugin-udev.c~	2019-05-20 10:17:42.000000000 +0000
++++ fwupd-1.2.9/plugins/udev/fu-plugin-udev.c	2019-06-03 15:39:21.271986714 +0000
+@@ -88,12 +88,12 @@
+ 	/* did we get enough data */
+ 	fu_device_add_flag (FU_DEVICE (device), FWUPD_DEVICE_FLAG_INTERNAL);
+ 	fu_device_add_icon (FU_DEVICE (device), "audio-card");
+-
++#if 0
+ 	/* get the FW version from the rom when unlocked */
+ 	rom_fn = g_build_filename (fu_udev_device_get_sysfs_path (device), "rom", NULL);
+ 	if (g_file_test (rom_fn, G_FILE_TEST_EXISTS))
+ 		fu_device_set_metadata (FU_DEVICE (device), "RomFilename", rom_fn);
+-
++#endif
+ 	/* we never open the device, so convert the instance IDs */
+ 	if (!fu_device_setup (FU_DEVICE (device), error))
+ 		return FALSE;

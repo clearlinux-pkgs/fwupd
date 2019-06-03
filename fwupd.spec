@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.2.9
-Release  : 27
+Release  : 28
 URL      : https://github.com/hughsie/fwupd/archive/1.2.9/fwupd-1.2.9.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.2.9/fwupd-1.2.9.tar.gz
 Summary  : A simple daemon to allow session software to update firmware
@@ -63,6 +63,7 @@ BuildRequires : pygobject-dev
 BuildRequires : python3-dev
 BuildRequires : vala
 BuildRequires : valgrind
+Patch1: no-poking-in-config-space.patch
 
 %description
 This project aims to make updating firmware on Linux automatic, safe and
@@ -117,14 +118,6 @@ Requires: fwupd = %{version}-%{release}
 
 %description dev
 dev components for the fwupd package.
-
-
-%package extras
-Summary: extras components for the fwupd package.
-Group: Default
-
-%description extras
-extras components for the fwupd package.
 
 
 %package lib
@@ -182,13 +175,14 @@ services components for the fwupd package.
 
 %prep
 %setup -q -n fwupd-1.2.9
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1559576225
+export SOURCE_DATE_EPOCH=1559576590
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -481,11 +475,6 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 /usr/lib64/libfwupd.so
 /usr/lib64/pkgconfig/fwupd.pc
 
-%files extras
-%defattr(-,root,root,-)
-/usr/lib/systemd/system/fwupd.service
-/usr/libexec/fwupd/fwupd
-
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/fwupd-plugins-3/libfu_plugin_altos.so
@@ -522,8 +511,8 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 
 %files libexec
 %defattr(-,root,root,-)
-%exclude /usr/libexec/fwupd/fwupd
 /usr/libexec/fwupd/efi/fwupdx64.efi
+/usr/libexec/fwupd/fwupd
 /usr/libexec/fwupd/fwupdagent
 /usr/libexec/fwupd/fwupdate
 /usr/libexec/fwupd/fwupdoffline
@@ -542,9 +531,9 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 
 %files services
 %defattr(-,root,root,-)
-%exclude /usr/lib/systemd/system/fwupd.service
 %exclude /usr/lib/systemd/system/multi-user.target.wants/fwupd.service
 /usr/lib/systemd/system/fwupd-offline-update.service
+/usr/lib/systemd/system/fwupd.service
 
 %files locales -f fwupd.lang
 %defattr(-,root,root,-)
