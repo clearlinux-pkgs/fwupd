@@ -1,5 +1,6 @@
-1.2.9
+1.2.10
 bash-completion-dev
+pkgconfig(bash-completion)
 pkgconfig(efivar)
 pkgconfig(libgcab-1.0)
 pkgconfig(umockdev-1.0)
