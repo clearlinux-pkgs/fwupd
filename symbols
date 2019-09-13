@@ -28,6 +28,7 @@ libfwupd.so.2:LIBFWUPD_1.2.6
 libfwupd.so.2:LIBFWUPD_1.2.7
 libfwupd.so.2:LIBFWUPD_1.2.8
 libfwupd.so.2:LIBFWUPD_1.2.9
+libfwupd.so.2:LIBFWUPD_1.3.1
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -45,6 +46,7 @@ libfwupd.so.2:fwupd_client_get_device_by_id
 libfwupd.so.2:fwupd_client_get_devices
 libfwupd.so.2:fwupd_client_get_downgrades
 libfwupd.so.2:fwupd_client_get_history
+libfwupd.so.2:fwupd_client_get_host_product
 libfwupd.so.2:fwupd_client_get_percentage
 libfwupd.so.2:fwupd_client_get_releases
 libfwupd.so.2:fwupd_client_get_remote_by_id
@@ -230,6 +232,7 @@ libfwupd.so.2:fwupd_remote_get_order_after
 libfwupd.so.2:fwupd_remote_get_order_before
 libfwupd.so.2:fwupd_remote_get_password
 libfwupd.so.2:fwupd_remote_get_priority
+libfwupd.so.2:fwupd_remote_get_remotes_dir
 libfwupd.so.2:fwupd_remote_get_report_uri
 libfwupd.so.2:fwupd_remote_get_title
 libfwupd.so.2:fwupd_remote_get_type
@@ -241,6 +244,7 @@ libfwupd.so.2:fwupd_remote_new
 libfwupd.so.2:fwupd_remote_set_agreement
 libfwupd.so.2:fwupd_remote_set_mtime
 libfwupd.so.2:fwupd_remote_set_priority
+libfwupd.so.2:fwupd_remote_set_remotes_dir
 libfwupd.so.2:fwupd_remote_to_variant
 libfwupd.so.2:fwupd_status_from_string
 libfwupd.so.2:fwupd_status_to_string

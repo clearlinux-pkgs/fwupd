@@ -20,4 +20,5 @@ libpthread.so.0
 libsmbios_c.so.2
 libsoup-2.4.so.1
 libsqlite3.so.0
+libtss2-esys.so.0
 libxmlb.so.1
