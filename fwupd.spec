@@ -4,10 +4,10 @@
 #
 Name     : fwupd
 Version  : 1.3.1
-Release  : 30
+Release  : 31
 URL      : https://github.com/hughsie/fwupd/archive/1.3.1/fwupd-1.3.1.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.3.1/fwupd-1.3.1.tar.gz
-Summary  : A simple daemon to allow session software to update firmware
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause LGPL-2.1
 Requires: fwupd-bin = %{version}-%{release}
@@ -31,6 +31,7 @@ BuildRequires : glib
 BuildRequires : glibc-bin
 BuildRequires : gnu-efi
 BuildRequires : gnu-efi-dev
+BuildRequires : gnu-efi-staticdev
 BuildRequires : gobject-introspection-dev
 BuildRequires : gpgme-dev
 BuildRequires : gsettings-desktop-schemas
@@ -116,7 +117,6 @@ Requires: fwupd-bin = %{version}-%{release}
 Requires: fwupd-data = %{version}-%{release}
 Provides: fwupd-devel = %{version}-%{release}
 Requires: fwupd = %{version}-%{release}
-Requires: fwupd = %{version}-%{release}
 
 %description dev
 dev components for the fwupd package.
@@ -184,8 +184,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568385966
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1568881602
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
