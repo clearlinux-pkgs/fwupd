@@ -29,6 +29,7 @@ libfwupd.so.2:LIBFWUPD_1.2.7
 libfwupd.so.2:LIBFWUPD_1.2.8
 libfwupd.so.2:LIBFWUPD_1.2.9
 libfwupd.so.2:LIBFWUPD_1.3.1
+libfwupd.so.2:LIBFWUPD_1.3.2
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -46,6 +47,7 @@ libfwupd.so.2:fwupd_client_get_device_by_id
 libfwupd.so.2:fwupd_client_get_devices
 libfwupd.so.2:fwupd_client_get_downgrades
 libfwupd.so.2:fwupd_client_get_history
+libfwupd.so.2:fwupd_client_get_host_machine_id
 libfwupd.so.2:fwupd_client_get_host_product
 libfwupd.so.2:fwupd_client_get_percentage
 libfwupd.so.2:fwupd_client_get_releases
@@ -154,6 +156,7 @@ libfwupd.so.2:fwupd_keyring_kind_to_string
 libfwupd.so.2:fwupd_release_add_category
 libfwupd.so.2:fwupd_release_add_checksum
 libfwupd.so.2:fwupd_release_add_flag
+libfwupd.so.2:fwupd_release_add_issue
 libfwupd.so.2:fwupd_release_add_metadata
 libfwupd.so.2:fwupd_release_add_metadata_item
 libfwupd.so.2:fwupd_release_array_from_variant
@@ -169,10 +172,12 @@ libfwupd.so.2:fwupd_release_get_filename
 libfwupd.so.2:fwupd_release_get_flags
 libfwupd.so.2:fwupd_release_get_homepage
 libfwupd.so.2:fwupd_release_get_install_duration
+libfwupd.so.2:fwupd_release_get_issues
 libfwupd.so.2:fwupd_release_get_license
 libfwupd.so.2:fwupd_release_get_metadata
 libfwupd.so.2:fwupd_release_get_metadata_item
 libfwupd.so.2:fwupd_release_get_name
+libfwupd.so.2:fwupd_release_get_name_variant_suffix
 libfwupd.so.2:fwupd_release_get_protocol
 libfwupd.so.2:fwupd_release_get_remote_id
 libfwupd.so.2:fwupd_release_get_size
@@ -198,6 +203,7 @@ libfwupd.so.2:fwupd_release_set_homepage
 libfwupd.so.2:fwupd_release_set_install_duration
 libfwupd.so.2:fwupd_release_set_license
 libfwupd.so.2:fwupd_release_set_name
+libfwupd.so.2:fwupd_release_set_name_variant_suffix
 libfwupd.so.2:fwupd_release_set_protocol
 libfwupd.so.2:fwupd_release_set_remote_id
 libfwupd.so.2:fwupd_release_set_size
