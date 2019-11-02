@@ -30,6 +30,7 @@ libfwupd.so.2:LIBFWUPD_1.2.8
 libfwupd.so.2:LIBFWUPD_1.2.9
 libfwupd.so.2:LIBFWUPD_1.3.1
 libfwupd.so.2:LIBFWUPD_1.3.2
+libfwupd.so.2:LIBFWUPD_1.3.3
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -167,6 +168,8 @@ libfwupd.so.2:fwupd_release_get_appstream_id
 libfwupd.so.2:fwupd_release_get_categories
 libfwupd.so.2:fwupd_release_get_checksums
 libfwupd.so.2:fwupd_release_get_description
+libfwupd.so.2:fwupd_release_get_detach_caption
+libfwupd.so.2:fwupd_release_get_detach_image
 libfwupd.so.2:fwupd_release_get_details_url
 libfwupd.so.2:fwupd_release_get_filename
 libfwupd.so.2:fwupd_release_get_flags
@@ -196,6 +199,8 @@ libfwupd.so.2:fwupd_release_new
 libfwupd.so.2:fwupd_release_remove_flag
 libfwupd.so.2:fwupd_release_set_appstream_id
 libfwupd.so.2:fwupd_release_set_description
+libfwupd.so.2:fwupd_release_set_detach_caption
+libfwupd.so.2:fwupd_release_set_detach_image
 libfwupd.so.2:fwupd_release_set_details_url
 libfwupd.so.2:fwupd_release_set_filename
 libfwupd.so.2:fwupd_release_set_flags
@@ -223,6 +228,7 @@ libfwupd.so.2:fwupd_remote_from_variant
 libfwupd.so.2:fwupd_remote_get_age
 libfwupd.so.2:fwupd_remote_get_agreement
 libfwupd.so.2:fwupd_remote_get_approval_required
+libfwupd.so.2:fwupd_remote_get_automatic_reports
 libfwupd.so.2:fwupd_remote_get_checksum
 libfwupd.so.2:fwupd_remote_get_enabled
 libfwupd.so.2:fwupd_remote_get_filename_cache

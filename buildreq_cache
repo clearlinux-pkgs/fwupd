@@ -1,4 +1,4 @@
-1.3.2
+1.3.3
 bash-completion-dev
 pkgconfig(bash-completion)
 pkgconfig(efivar)
@@ -7,4 +7,5 @@ pkgconfig(tss2-esys)
 pkgconfig(umockdev-1.0)
 pkgconfig(valgrind)
 pkgconfig(xmlb)
+util-linux
 valgrind
