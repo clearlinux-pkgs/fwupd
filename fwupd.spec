@@ -67,7 +67,6 @@ BuildRequires : python3-dev
 BuildRequires : util-linux
 BuildRequires : vala
 BuildRequires : valgrind
-Patch1: no-poking-in-config-space.patch
 
 %description
 This project aims to make updating firmware on Linux automatic, safe and
