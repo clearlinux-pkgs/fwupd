@@ -4,10 +4,10 @@
 #
 Name     : fwupd
 Version  : 1.3.3
-Release  : 33
+Release  : 34
 URL      : https://github.com/hughsie/fwupd/archive/1.3.3/fwupd-1.3.3.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.3.3/fwupd-1.3.3.tar.gz
-Summary  : A simple daemon to allow session software to update firmware
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause LGPL-2.1
 Requires: fwupd-bin = %{version}-%{release}
@@ -118,7 +118,6 @@ Requires: fwupd-bin = %{version}-%{release}
 Requires: fwupd-data = %{version}-%{release}
 Provides: fwupd-devel = %{version}-%{release}
 Requires: fwupd = %{version}-%{release}
-Requires: fwupd = %{version}-%{release}
 
 %description dev
 dev components for the fwupd package.
@@ -179,6 +178,7 @@ services components for the fwupd package.
 
 %prep
 %setup -q -n fwupd-1.3.3
+cd %{_builddir}/fwupd-1.3.3
 %patch1 -p1
 
 %build
@@ -186,8 +186,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1572703422
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1573500280
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
