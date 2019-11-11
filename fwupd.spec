@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.3.3
-Release  : 35
+Release  : 36
 URL      : https://github.com/hughsie/fwupd/archive/1.3.3/fwupd-1.3.3.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.3.3/fwupd-1.3.3.tar.gz
 Summary  : A simple daemon to allow session software to update firmware
@@ -67,7 +67,7 @@ BuildRequires : python3-dev
 BuildRequires : util-linux
 BuildRequires : vala
 BuildRequires : valgrind
-Patch1: no-poking-in-config-space.patch
+Patch1: 0001-Guard-against-option-rom-read.patch
 
 %description
 This project aims to make updating firmware on Linux automatic, safe and
@@ -186,7 +186,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1573500692
+export SOURCE_DATE_EPOCH=1573502718
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
