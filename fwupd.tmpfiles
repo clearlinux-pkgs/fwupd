@@ -1,3 +1,2 @@
-d /etc/fwupd 0755 root root - -
+C /etc/fwupd - - - - /usr/share/defaults/fwupd
 L /etc/fwupd/pki - - - - /usr/share/fwupd/pki
-C /etc/fwupd/remotes.d - - - - /usr/share/defaults/fwupd/remotes.d
