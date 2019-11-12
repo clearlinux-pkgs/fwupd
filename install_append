@@ -2,3 +2,6 @@ rm -fr %{buildroot}/usr/share/fwupd/dbus-1
 rm %{buildroot}/usr/lib/systemd/system/system-update.target.wants/fwupd-offline-update.service
 mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
 ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/fwupd.service
+mv %{buildroot}/etc/pki %{buildroot}/usr/share/fwupd/pki
+mkdir -p %{buildroot}/usr/share/defaults
+mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd

@@ -4,9 +4,10 @@
 #
 Name     : fwupd
 Version  : 1.3.3
-Release  : 36
+Release  : 39
 URL      : https://github.com/hughsie/fwupd/archive/1.3.3/fwupd-1.3.3.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.3.3/fwupd-1.3.3.tar.gz
+Source1  : fwupd.tmpfiles
 Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
 License  : BSD-3-Clause LGPL-2.1
@@ -186,7 +187,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1573502718
+export SOURCE_DATE_EPOCH=1573583179
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -195,7 +196,7 @@ export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
-CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtkdoc=false --sysconfdir=/usr/share/fwupd/  builddir
+CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtkdoc=false  builddir
 ninja -v -C builddir
 
 %install
@@ -205,6 +206,8 @@ cp %{_builddir}/fwupd-1.3.3/contrib/debian/signing-template/copyright %{buildroo
 cp %{_builddir}/fwupd-1.3.3/data/tests/thunderbolt/COPYING %{buildroot}/usr/share/package-licenses/fwupd/c10b5d1532bdbc2ceae3a33e7ecc8ecbb7f7d260
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang fwupd
+mkdir -p %{buildroot}/usr/lib/tmpfiles.d
+install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/fwupd.conf
 ## Remove excluded files
 rm -f %{buildroot}/var/lib/fwupd/builder/README.md
 ## install_append content
@@ -212,6 +215,9 @@ rm -fr %{buildroot}/usr/share/fwupd/dbus-1
 rm %{buildroot}/usr/lib/systemd/system/system-update.target.wants/fwupd-offline-update.service
 mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
 ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/fwupd.service
+mv %{buildroot}/etc/pki %{buildroot}/usr/share/fwupd/pki
+mkdir -p %{buildroot}/usr/share/defaults
+mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 ## install_append end
 
 %files
@@ -230,6 +236,7 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 
 %files config
 %defattr(-,root,root,-)
+/usr/lib/tmpfiles.d/fwupd.conf
 /usr/lib/udev/rules.d/90-fwupd-devices.rules
 
 %files data
@@ -241,17 +248,17 @@ ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wan
 /usr/share/dbus-1/interfaces/org.freedesktop.fwupd.xml
 /usr/share/dbus-1/system-services/org.freedesktop.fwupd.service
 /usr/share/dbus-1/system.d/org.freedesktop.fwupd.conf
+/usr/share/defaults/fwupd/daemon.conf
+/usr/share/defaults/fwupd/redfish.conf
+/usr/share/defaults/fwupd/remotes.d/dell-esrt.conf
+/usr/share/defaults/fwupd/remotes.d/fwupd-tests.conf
+/usr/share/defaults/fwupd/remotes.d/lvfs-testing.conf
+/usr/share/defaults/fwupd/remotes.d/lvfs.conf
+/usr/share/defaults/fwupd/remotes.d/vendor-directory.conf
+/usr/share/defaults/fwupd/remotes.d/vendor.conf
+/usr/share/defaults/fwupd/thunderbolt.conf
+/usr/share/defaults/fwupd/uefi.conf
 /usr/share/fwupd/firmware-packager
-/usr/share/fwupd/fwupd/daemon.conf
-/usr/share/fwupd/fwupd/redfish.conf
-/usr/share/fwupd/fwupd/remotes.d/dell-esrt.conf
-/usr/share/fwupd/fwupd/remotes.d/fwupd-tests.conf
-/usr/share/fwupd/fwupd/remotes.d/lvfs-testing.conf
-/usr/share/fwupd/fwupd/remotes.d/lvfs.conf
-/usr/share/fwupd/fwupd/remotes.d/vendor-directory.conf
-/usr/share/fwupd/fwupd/remotes.d/vendor.conf
-/usr/share/fwupd/fwupd/thunderbolt.conf
-/usr/share/fwupd/fwupd/uefi.conf
 /usr/share/fwupd/metainfo/org.freedesktop.fwupd.remotes.lvfs-testing.metainfo.xml
 /usr/share/fwupd/metainfo/org.freedesktop.fwupd.remotes.lvfs.metainfo.xml
 /usr/share/fwupd/pki/fwupd-metadata/GPG-KEY-Linux-Foundation-Metadata
