@@ -31,6 +31,7 @@ libfwupd.so.2:LIBFWUPD_1.2.9
 libfwupd.so.2:LIBFWUPD_1.3.1
 libfwupd.so.2:LIBFWUPD_1.3.2
 libfwupd.so.2:LIBFWUPD_1.3.3
+libfwupd.so.2:LIBFWUPD_1.3.4
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -42,6 +43,7 @@ libfwupd.so.2:fwupd_client_activate
 libfwupd.so.2:fwupd_client_clear_results
 libfwupd.so.2:fwupd_client_connect
 libfwupd.so.2:fwupd_client_get_approved_firmware
+libfwupd.so.2:fwupd_client_get_daemon_interactive
 libfwupd.so.2:fwupd_client_get_daemon_version
 libfwupd.so.2:fwupd_client_get_details
 libfwupd.so.2:fwupd_client_get_device_by_id
