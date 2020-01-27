@@ -1,0 +1,37 @@
+From 8f210a6f91f94b13a7d854b465079208ace19079 Mon Sep 17 00:00:00 2001
+From: Auke Kok <auke-jan.h.kok@intel.com>
+Date: Mon, 27 Jan 2020 10:30:26 -0800
+Subject: [PATCH] fwupd-metadata pki files are under
+ /usr/share/fwupd/pki/fwupd-metadata
+
+---
+ src/fu-engine.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/fu-engine.c b/src/fu-engine.c
+index a087354..48fab4c 100644
+--- a/src/fu-engine.c
++++ b/src/fu-engine.c
+@@ -2623,7 +2623,7 @@ fu_engine_update_metadata (FuEngine *self, const gchar *remote_id,
+ 	g_autoptr(GInputStream) stream_fd = NULL;
+ 	g_autoptr(GInputStream) stream_sig = NULL;
+ 	g_autofree gchar *pki_dir = NULL;
+-	g_autofree gchar *sysconfdir = NULL;
++	g_autofree gchar *datadir = NULL;
+ 
+ 	g_return_val_if_fail (FU_IS_ENGINE (self), FALSE);
+ 	g_return_val_if_fail (remote_id != NULL, FALSE);
+@@ -2674,8 +2674,8 @@ fu_engine_update_metadata (FuEngine *self, const gchar *remote_id,
+ 			return FALSE;
+ 		if (!fu_keyring_setup (kr, error))
+ 			return FALSE;
+-		sysconfdir = fu_common_get_path (FU_PATH_KIND_SYSCONFDIR);
+-		pki_dir = g_build_filename (sysconfdir, "pki", "fwupd-metadata", NULL);
++		datadir = fu_common_get_path (FU_PATH_KIND_DATADIR_PKG);
++		pki_dir = g_build_filename (datadir, "pki", "fwupd-metadata", NULL);
+ 		if (!fu_keyring_add_public_keys (kr, pki_dir, error))
+ 			return FALSE;
+ 		kr_result = fu_keyring_verify_data (kr, bytes_raw, bytes_sig,
+-- 
+2.25.0
+

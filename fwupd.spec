@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.3.4
-Release  : 41
+Release  : 42
 URL      : https://github.com/hughsie/fwupd/archive/1.3.4/fwupd-1.3.4.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.3.4/fwupd-1.3.4.tar.gz
 Source1  : fwupd.tmpfiles
@@ -65,9 +65,11 @@ BuildRequires : pycairo
 BuildRequires : pygobject
 BuildRequires : pygobject-dev
 BuildRequires : python3-dev
+BuildRequires : util-linux
 BuildRequires : vala
 BuildRequires : valgrind
 Patch1: 0001-Guard-against-option-rom-read.patch
+Patch2: 0002-fwupd-metadata-pki-files-are-under-usr-share-fwupd-p.patch
 
 %description
 This project aims to make updating firmware on Linux automatic, safe and
@@ -117,7 +119,6 @@ Requires: fwupd-lib = %{version}-%{release}
 Requires: fwupd-bin = %{version}-%{release}
 Requires: fwupd-data = %{version}-%{release}
 Provides: fwupd-devel = %{version}-%{release}
-Requires: fwupd = %{version}-%{release}
 Requires: fwupd = %{version}-%{release}
 
 %description dev
@@ -181,14 +182,14 @@ services components for the fwupd package.
 %setup -q -n fwupd-1.3.4
 cd %{_builddir}/fwupd-1.3.4
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1574447060
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1580150043
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
