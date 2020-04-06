@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.3.6
-Release  : 43
+Release  : 44
 URL      : https://github.com/hughsie/fwupd/archive/1.3.6/fwupd-1.3.6.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.3.6/fwupd-1.3.6.tar.gz
 Source1  : fwupd.tmpfiles
@@ -177,6 +177,15 @@ Group: Systemd services
 services components for the fwupd package.
 
 
+%package tests
+Summary: tests components for the fwupd package.
+Group: Default
+Requires: fwupd = %{version}-%{release}
+
+%description tests
+tests components for the fwupd package.
+
+
 %prep
 %setup -q -n fwupd-1.3.6
 cd %{_builddir}/fwupd-1.3.6
@@ -188,14 +197,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1580408006
+export SOURCE_DATE_EPOCH=1586882108
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dgtkdoc=false  builddir
 ninja -v -C builddir
@@ -310,12 +319,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/fwupd/simple_client.py
 /usr/share/gir-1.0/*.gir
 /usr/share/icons/hicolor/scalable/apps/org.freedesktop.fwupd.svg
-/usr/share/installed-tests/fwupd/fakedevice123.cab
-/usr/share/installed-tests/fwupd/fakedevice124.cab
-/usr/share/installed-tests/fwupd/fwupd-tests.xml
-/usr/share/installed-tests/fwupd/fwupdmgr.sh
-/usr/share/installed-tests/fwupd/fwupdmgr.test
-/usr/share/installed-tests/fwupd/hardware.py
 /usr/share/locale/ca/LC_IMAGES/fwupd-1024-768.bmp.gz
 /usr/share/locale/ca/LC_IMAGES/fwupd-1920-1080.bmp.gz
 /usr/share/locale/ca/LC_IMAGES/fwupd-3840-2160.bmp.gz
@@ -607,6 +610,15 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/lib/systemd/system/fwupd-refresh.service
 /usr/lib/systemd/system/fwupd-refresh.timer
 /usr/lib/systemd/system/fwupd.service
+
+%files tests
+%defattr(-,root,root,-)
+/usr/share/installed-tests/fwupd/fakedevice123.cab
+/usr/share/installed-tests/fwupd/fakedevice124.cab
+/usr/share/installed-tests/fwupd/fwupd-tests.xml
+/usr/share/installed-tests/fwupd/fwupdmgr.sh
+/usr/share/installed-tests/fwupd/fwupdmgr.test
+/usr/share/installed-tests/fwupd/hardware.py
 
 %files locales -f fwupd.lang
 %defattr(-,root,root,-)
