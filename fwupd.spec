@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.3.6
-Release  : 46
+Release  : 47
 URL      : https://github.com/hughsie/fwupd/archive/1.3.6/fwupd-1.3.6.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.3.6/fwupd-1.3.6.tar.gz
 Source1  : fwupd.tmpfiles
