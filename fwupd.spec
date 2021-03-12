@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.3.6
-Release  : 48
+Release  : 49
 URL      : https://github.com/hughsie/fwupd/archive/1.3.6/fwupd-1.3.6.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.3.6/fwupd-1.3.6.tar.gz
 Source1  : fwupd.tmpfiles
@@ -197,7 +197,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1586882108
+export SOURCE_DATE_EPOCH=1615593015
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
