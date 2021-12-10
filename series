@@ -1,2 +1,1 @@
-0001-Guard-against-option-rom-read.patch
-0002-fwupd-metadata-pki-files-are-under-usr-share-fwupd-p.patch
+0001-pki-files-are-moved-under-datadir.patch

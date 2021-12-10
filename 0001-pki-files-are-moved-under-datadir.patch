@@ -1,0 +1,29 @@
+From c27d3e7349aef6af438844c440e502f9438a201b Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Thu, 9 Dec 2021 16:13:50 -0800
+Subject: [PATCH] pki files are moved under datadir
+
+---
+ src/fu-engine.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/fu-engine.c b/src/fu-engine.c
+index a2b7b64..4ef8250 100644
+--- a/src/fu-engine.c
++++ b/src/fu-engine.c
+@@ -7141,9 +7141,10 @@ fu_engine_init(FuEngine *self)
+ 	keyring_path = fu_common_get_path(FU_PATH_KIND_LOCALSTATEDIR_PKG);
+ 	jcat_context_set_keyring_path(self->jcat_context, keyring_path);
+ 	sysconfdir = fu_common_get_path(FU_PATH_KIND_SYSCONFDIR);
+-	pkidir_fw = g_build_filename(sysconfdir, "pki", "fwupd", NULL);
++        char *datadir = fu_common_get_path (FU_PATH_KIND_DATADIR_PKG);
++	pkidir_fw = g_build_filename(datadir, "pki", "fwupd", NULL);
+ 	jcat_context_add_public_keys(self->jcat_context, pkidir_fw);
+-	pkidir_md = g_build_filename(sysconfdir, "pki", "fwupd-metadata", NULL);
++	pkidir_md = g_build_filename(datadir, "pki", "fwupd-metadata", NULL);
+ 	jcat_context_add_public_keys(self->jcat_context, pkidir_md);
+ 
+ 	/* add some runtime versions of things the daemon depends on */
+-- 
+2.34.1
+
