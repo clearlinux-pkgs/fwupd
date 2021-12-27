@@ -51,6 +51,7 @@ libfwupd.so.2:LIBFWUPD_1.6.2
 libfwupd.so.2:LIBFWUPD_1.7.0
 libfwupd.so.2:LIBFWUPD_1.7.1
 libfwupd.so.2:LIBFWUPD_1.7.2
+libfwupd.so.2:LIBFWUPD_1.7.3
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -100,6 +101,7 @@ libfwupd.so.2:fwupd_client_get_downgrades_finish
 libfwupd.so.2:fwupd_client_get_history
 libfwupd.so.2:fwupd_client_get_history_async
 libfwupd.so.2:fwupd_client_get_history_finish
+libfwupd.so.2:fwupd_client_get_host_bkc
 libfwupd.so.2:fwupd_client_get_host_machine_id
 libfwupd.so.2:fwupd_client_get_host_product
 libfwupd.so.2:fwupd_client_get_host_security_attrs
@@ -330,6 +332,7 @@ libfwupd.so.2:fwupd_release_add_issue
 libfwupd.so.2:fwupd_release_add_location
 libfwupd.so.2:fwupd_release_add_metadata
 libfwupd.so.2:fwupd_release_add_metadata_item
+libfwupd.so.2:fwupd_release_add_tag
 libfwupd.so.2:fwupd_release_array_from_variant
 libfwupd.so.2:fwupd_release_flag_from_string
 libfwupd.so.2:fwupd_release_flag_to_string
@@ -360,6 +363,7 @@ libfwupd.so.2:fwupd_release_get_remote_id
 libfwupd.so.2:fwupd_release_get_size
 libfwupd.so.2:fwupd_release_get_source_url
 libfwupd.so.2:fwupd_release_get_summary
+libfwupd.so.2:fwupd_release_get_tags
 libfwupd.so.2:fwupd_release_get_trust_flags
 libfwupd.so.2:fwupd_release_get_type
 libfwupd.so.2:fwupd_release_get_update_image
@@ -371,6 +375,7 @@ libfwupd.so.2:fwupd_release_get_version
 libfwupd.so.2:fwupd_release_has_category
 libfwupd.so.2:fwupd_release_has_checksum
 libfwupd.so.2:fwupd_release_has_flag
+libfwupd.so.2:fwupd_release_has_tag
 libfwupd.so.2:fwupd_release_new
 libfwupd.so.2:fwupd_release_remove_flag
 libfwupd.so.2:fwupd_release_set_appstream_id
@@ -575,6 +580,9 @@ libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.6.2
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.0
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.1
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.2
+libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.3
+libfwupdplugin.so.5:fu_archive_firmware_get_type
+libfwupdplugin.so.5:fu_archive_firmware_new
 libfwupdplugin.so.5:fu_archive_get_type
 libfwupdplugin.so.5:fu_archive_iterate
 libfwupdplugin.so.5:fu_archive_lookup_by_fn
@@ -619,10 +627,14 @@ libfwupdplugin.so.5:fu_cabinet_set_size_max
 libfwupdplugin.so.5:fu_cabinet_sign
 libfwupdplugin.so.5:fu_cfi_device_get_cmd
 libfwupdplugin.so.5:fu_cfi_device_get_flash_id
+libfwupdplugin.so.5:fu_cfi_device_get_page_size
+libfwupdplugin.so.5:fu_cfi_device_get_sector_size
 libfwupdplugin.so.5:fu_cfi_device_get_size
 libfwupdplugin.so.5:fu_cfi_device_get_type
 libfwupdplugin.so.5:fu_cfi_device_new
 libfwupdplugin.so.5:fu_cfi_device_set_flash_id
+libfwupdplugin.so.5:fu_cfi_device_set_page_size
+libfwupdplugin.so.5:fu_cfi_device_set_sector_size
 libfwupdplugin.so.5:fu_cfi_device_set_size
 libfwupdplugin.so.5:fu_cfu_device_offer_to_string
 libfwupdplugin.so.5:fu_cfu_device_reject_to_string
@@ -737,7 +749,18 @@ libfwupdplugin.so.5:fu_common_strnsplit_full
 libfwupdplugin.so.5:fu_common_strsafe
 libfwupdplugin.so.5:fu_common_strstrip
 libfwupdplugin.so.5:fu_common_strtoull
+libfwupdplugin.so.5:fu_common_strtoull_full
 libfwupdplugin.so.5:fu_common_strwidth
+libfwupdplugin.so.5:fu_common_sum16
+libfwupdplugin.so.5:fu_common_sum16_bytes
+libfwupdplugin.so.5:fu_common_sum16w
+libfwupdplugin.so.5:fu_common_sum16w_bytes
+libfwupdplugin.so.5:fu_common_sum32
+libfwupdplugin.so.5:fu_common_sum32_bytes
+libfwupdplugin.so.5:fu_common_sum32w
+libfwupdplugin.so.5:fu_common_sum32w_bytes
+libfwupdplugin.so.5:fu_common_sum8
+libfwupdplugin.so.5:fu_common_sum8_bytes
 libfwupdplugin.so.5:fu_common_uri_get_scheme
 libfwupdplugin.so.5:fu_common_vercmp_full
 libfwupdplugin.so.5:fu_common_version_ensure_semver
