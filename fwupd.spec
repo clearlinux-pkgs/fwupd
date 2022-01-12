@@ -4,7 +4,7 @@
 #
 Name     : fwupd
 Version  : 1.7.3
-Release  : 51
+Release  : 52
 URL      : https://github.com/hughsie/fwupd/archive/1.7.3/fwupd-1.7.3.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.7.3/fwupd-1.7.3.tar.gz
 Source1  : fwupd.tmpfiles
@@ -22,7 +22,6 @@ Requires: fwupd-man = %{version}-%{release}
 Requires: fwupd-services = %{version}-%{release}
 Requires: glib
 Requires: gsettings-desktop-schemas
-BuildRequires : Pillow
 BuildRequires : bash-completion-dev
 BuildRequires : buildreq-meson
 BuildRequires : clear-font
@@ -66,6 +65,7 @@ BuildRequires : popt-dev
 BuildRequires : pycairo
 BuildRequires : pygobject
 BuildRequires : pygobject-dev
+BuildRequires : pypi(pillow)
 BuildRequires : python3-dev
 BuildRequires : vala
 Patch1: 0001-pki-files-are-moved-under-datadir.patch
@@ -205,7 +205,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1640641719
+export SOURCE_DATE_EPOCH=1642007498
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib

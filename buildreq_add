@@ -6,7 +6,7 @@ pygobject-dev
 pygobject
 gobject-introspection-dev
 python3-dev
-Pillow
+pypi(pillow)
 pycairo
 vala
 vala
