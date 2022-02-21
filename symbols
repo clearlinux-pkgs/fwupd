@@ -52,6 +52,7 @@ libfwupd.so.2:LIBFWUPD_1.7.0
 libfwupd.so.2:LIBFWUPD_1.7.1
 libfwupd.so.2:LIBFWUPD_1.7.2
 libfwupd.so.2:LIBFWUPD_1.7.3
+libfwupd.so.2:LIBFWUPD_1.7.4
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -231,6 +232,7 @@ libfwupd.so.2:fwupd_device_get_protocol
 libfwupd.so.2:fwupd_device_get_protocols
 libfwupd.so.2:fwupd_device_get_release_default
 libfwupd.so.2:fwupd_device_get_releases
+libfwupd.so.2:fwupd_device_get_root
 libfwupd.so.2:fwupd_device_get_serial
 libfwupd.so.2:fwupd_device_get_status
 libfwupd.so.2:fwupd_device_get_summary
@@ -581,6 +583,7 @@ libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.0
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.1
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.2
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.3
+libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.4
 libfwupdplugin.so.5:fu_archive_firmware_get_type
 libfwupdplugin.so.5:fu_archive_firmware_new
 libfwupdplugin.so.5:fu_archive_get_type
@@ -597,6 +600,7 @@ libfwupdplugin.so.5:fu_backend_get_enabled
 libfwupdplugin.so.5:fu_backend_get_name
 libfwupdplugin.so.5:fu_backend_get_type
 libfwupdplugin.so.5:fu_backend_lookup_by_id
+libfwupdplugin.so.5:fu_backend_registered
 libfwupdplugin.so.5:fu_backend_set_enabled
 libfwupdplugin.so.5:fu_backend_setup
 libfwupdplugin.so.5:fu_battery_state_to_string
@@ -625,6 +629,7 @@ libfwupdplugin.so.5:fu_cabinet_parse
 libfwupdplugin.so.5:fu_cabinet_set_jcat_context
 libfwupdplugin.so.5:fu_cabinet_set_size_max
 libfwupdplugin.so.5:fu_cabinet_sign
+libfwupdplugin.so.5:fu_cfi_device_get_block_size
 libfwupdplugin.so.5:fu_cfi_device_get_cmd
 libfwupdplugin.so.5:fu_cfi_device_get_flash_id
 libfwupdplugin.so.5:fu_cfi_device_get_page_size
@@ -632,6 +637,7 @@ libfwupdplugin.so.5:fu_cfi_device_get_sector_size
 libfwupdplugin.so.5:fu_cfi_device_get_size
 libfwupdplugin.so.5:fu_cfi_device_get_type
 libfwupdplugin.so.5:fu_cfi_device_new
+libfwupdplugin.so.5:fu_cfi_device_set_block_size
 libfwupdplugin.so.5:fu_cfi_device_set_flash_id
 libfwupdplugin.so.5:fu_cfi_device_set_page_size
 libfwupdplugin.so.5:fu_cfi_device_set_sector_size
@@ -710,6 +716,7 @@ libfwupdplugin.so.5:fu_common_firmware_builder
 libfwupdplugin.so.5:fu_common_fnmatch
 libfwupdplugin.so.5:fu_common_get_contents_bytes
 libfwupdplugin.so.5:fu_common_get_contents_fd
+libfwupdplugin.so.5:fu_common_get_contents_stream
 libfwupdplugin.so.5:fu_common_get_cpu_vendor
 libfwupdplugin.so.5:fu_common_get_esp_default
 libfwupdplugin.so.5:fu_common_get_esp_for_path
@@ -790,6 +797,7 @@ libfwupdplugin.so.5:fu_context_get_firmware_gtype_ids
 libfwupdplugin.so.5:fu_context_get_hwid_guids
 libfwupdplugin.so.5:fu_context_get_hwid_replace_value
 libfwupdplugin.so.5:fu_context_get_hwid_value
+libfwupdplugin.so.5:fu_context_get_lid_state
 libfwupdplugin.so.5:fu_context_get_smbios_data
 libfwupdplugin.so.5:fu_context_get_smbios_integer
 libfwupdplugin.so.5:fu_context_get_smbios_string
@@ -807,6 +815,7 @@ libfwupdplugin.so.5:fu_context_set_battery_level
 libfwupdplugin.so.5:fu_context_set_battery_state
 libfwupdplugin.so.5:fu_context_set_battery_threshold
 libfwupdplugin.so.5:fu_context_set_compile_versions
+libfwupdplugin.so.5:fu_context_set_lid_state
 libfwupdplugin.so.5:fu_context_set_runtime_versions
 libfwupdplugin.so.5:fu_device_activate
 libfwupdplugin.so.5:fu_device_add_child
@@ -991,6 +1000,7 @@ libfwupdplugin.so.5:fu_efivar_supported
 libfwupdplugin.so.5:fu_firmware_add_chunk
 libfwupdplugin.so.5:fu_firmware_add_flag
 libfwupdplugin.so.5:fu_firmware_add_image
+libfwupdplugin.so.5:fu_firmware_add_patch
 libfwupdplugin.so.5:fu_firmware_build
 libfwupdplugin.so.5:fu_firmware_build_from_xml
 libfwupdplugin.so.5:fu_firmware_export
@@ -1000,6 +1010,7 @@ libfwupdplugin.so.5:fu_firmware_flag_to_string
 libfwupdplugin.so.5:fu_firmware_get_addr
 libfwupdplugin.so.5:fu_firmware_get_alignment
 libfwupdplugin.so.5:fu_firmware_get_bytes
+libfwupdplugin.so.5:fu_firmware_get_bytes_with_patches
 libfwupdplugin.so.5:fu_firmware_get_checksum
 libfwupdplugin.so.5:fu_firmware_get_chunks
 libfwupdplugin.so.5:fu_firmware_get_filename
@@ -1102,8 +1113,10 @@ libfwupdplugin.so.5:fu_io_channel_write_byte_array
 libfwupdplugin.so.5:fu_io_channel_write_bytes
 libfwupdplugin.so.5:fu_io_channel_write_raw
 libfwupdplugin.so.5:fu_kenv_get_string
+libfwupdplugin.so.5:fu_lid_state_to_string
 libfwupdplugin.so.5:fu_memcpy_safe
 libfwupdplugin.so.5:fu_memdup_safe
+libfwupdplugin.so.5:fu_memmem_safe
 libfwupdplugin.so.5:fu_plugin_add_device_gtype
 libfwupdplugin.so.5:fu_plugin_add_firmware_gtype
 libfwupdplugin.so.5:fu_plugin_add_report_metadata
@@ -1162,6 +1175,7 @@ libfwupdplugin.so.5:fu_plugin_set_config_value
 libfwupdplugin.so.5:fu_plugin_set_name
 libfwupdplugin.so.5:fu_plugin_set_order
 libfwupdplugin.so.5:fu_plugin_set_priority
+libfwupdplugin.so.5:fu_plugin_set_secure_config_value
 libfwupdplugin.so.5:fu_progress_add_flag
 libfwupdplugin.so.5:fu_progress_add_step
 libfwupdplugin.so.5:fu_progress_finished
@@ -1253,6 +1267,7 @@ libfwupdplugin.so.5:fu_udev_device_set_flags
 libfwupdplugin.so.5:fu_udev_device_set_logical_id
 libfwupdplugin.so.5:fu_udev_device_set_physical_id
 libfwupdplugin.so.5:fu_udev_device_write_sysfs
+libfwupdplugin.so.5:fu_usb_device_add_interface
 libfwupdplugin.so.5:fu_usb_device_find_udev_device
 libfwupdplugin.so.5:fu_usb_device_get_dev
 libfwupdplugin.so.5:fu_usb_device_get_pid
@@ -1263,6 +1278,7 @@ libfwupdplugin.so.5:fu_usb_device_get_vid
 libfwupdplugin.so.5:fu_usb_device_is_open
 libfwupdplugin.so.5:fu_usb_device_new
 libfwupdplugin.so.5:fu_usb_device_new_with_context
+libfwupdplugin.so.5:fu_usb_device_set_configuration
 libfwupdplugin.so.5:fu_usb_device_set_dev
 libfwupdplugin.so.5:fu_version_string
 libfwupdplugin.so.5:fu_volume_check_free_space

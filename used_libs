@@ -18,5 +18,4 @@ libprotobuf-c.so.1
 libsmbios_c.so.2
 libsqlite3.so.0
 libsystemd.so.0
-libtss2-esys.so.0
 libxmlb.so.2

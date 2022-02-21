@@ -1,1 +1,2 @@
 -Ddocs=none
+-Dplugin_tpm=false
