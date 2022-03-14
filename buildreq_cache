@@ -1,4 +1,4 @@
-1.7.5
+1.7.6
 bash-completion-dev
 curl-dev
 pkgconfig(bash-completion)
@@ -8,5 +8,4 @@ pkgconfig(jcat)
 pkgconfig(libcurl)
 pkgconfig(libgcab-1.0)
 pkgconfig(libprotobuf-c)
-pkgconfig(tss2-esys)
 pkgconfig(xmlb)

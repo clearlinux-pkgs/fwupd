@@ -53,6 +53,7 @@ libfwupd.so.2:LIBFWUPD_1.7.1
 libfwupd.so.2:LIBFWUPD_1.7.2
 libfwupd.so.2:LIBFWUPD_1.7.3
 libfwupd.so.2:LIBFWUPD_1.7.4
+libfwupd.so.2:LIBFWUPD_1.7.6
 libfwupd.so.2:fwupd_build_history_report_json
 libfwupd.so.2:fwupd_build_machine_id
 libfwupd.so.2:fwupd_build_user_agent
@@ -200,6 +201,7 @@ libfwupd.so.2:fwupd_device_add_flag
 libfwupd.so.2:fwupd_device_add_guid
 libfwupd.so.2:fwupd_device_add_icon
 libfwupd.so.2:fwupd_device_add_instance_id
+libfwupd.so.2:fwupd_device_add_issue
 libfwupd.so.2:fwupd_device_add_protocol
 libfwupd.so.2:fwupd_device_add_release
 libfwupd.so.2:fwupd_device_add_vendor_id
@@ -223,6 +225,7 @@ libfwupd.so.2:fwupd_device_get_icons
 libfwupd.so.2:fwupd_device_get_id
 libfwupd.so.2:fwupd_device_get_install_duration
 libfwupd.so.2:fwupd_device_get_instance_ids
+libfwupd.so.2:fwupd_device_get_issues
 libfwupd.so.2:fwupd_device_get_modified
 libfwupd.so.2:fwupd_device_get_name
 libfwupd.so.2:fwupd_device_get_parent
@@ -584,6 +587,7 @@ libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.1
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.2
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.3
 libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.4
+libfwupdplugin.so.5:LIBFWUPDPLUGIN_1.7.6
 libfwupdplugin.so.5:fu_archive_firmware_get_type
 libfwupdplugin.so.5:fu_archive_firmware_new
 libfwupdplugin.so.5:fu_archive_get_type
@@ -728,6 +732,7 @@ libfwupdplugin.so.5:fu_common_get_volume_by_device
 libfwupdplugin.so.5:fu_common_get_volume_by_devnum
 libfwupdplugin.so.5:fu_common_get_volumes_by_kind
 libfwupdplugin.so.5:fu_common_guid_is_plausible
+libfwupdplugin.so.5:fu_common_instance_id_strsafe
 libfwupdplugin.so.5:fu_common_is_live_media
 libfwupdplugin.so.5:fu_common_kernel_locked_down
 libfwupdplugin.so.5:fu_common_mkdir
@@ -771,6 +776,7 @@ libfwupdplugin.so.5:fu_common_sum8_bytes
 libfwupdplugin.so.5:fu_common_uri_get_scheme
 libfwupdplugin.so.5:fu_common_vercmp_full
 libfwupdplugin.so.5:fu_common_version_ensure_semver
+libfwupdplugin.so.5:fu_common_version_ensure_semver_full
 libfwupdplugin.so.5:fu_common_version_from_uint16
 libfwupdplugin.so.5:fu_common_version_from_uint32
 libfwupdplugin.so.5:fu_common_version_from_uint64
@@ -1241,6 +1247,7 @@ libfwupdplugin.so.5:fu_udev_device_get_fd
 libfwupdplugin.so.5:fu_udev_device_get_model
 libfwupdplugin.so.5:fu_udev_device_get_number
 libfwupdplugin.so.5:fu_udev_device_get_parent_name
+libfwupdplugin.so.5:fu_udev_device_get_parent_with_subsystem
 libfwupdplugin.so.5:fu_udev_device_get_revision
 libfwupdplugin.so.5:fu_udev_device_get_siblings_with_subsystem
 libfwupdplugin.so.5:fu_udev_device_get_slot_depth
