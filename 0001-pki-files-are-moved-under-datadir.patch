@@ -7,16 +7,14 @@ Subject: [PATCH] pki files are moved under datadir
  src/fu-engine.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/src/fu-engine.c b/src/fu-engine.c
-index a2b7b64..4ef8250 100644
---- a/src/fu-engine.c
-+++ b/src/fu-engine.c
-@@ -7141,9 +7141,10 @@ fu_engine_init(FuEngine *self)
- 	keyring_path = fu_common_get_path(FU_PATH_KIND_LOCALSTATEDIR_PKG);
+--- fwupd-1.8.4/src/fu-engine.c~	2022-08-30 09:37:36.000000000 +0000
++++ fwupd-1.8.4/src/fu-engine.c	2022-09-20 14:05:00.656219194 +0000
+@@ -8100,9 +8100,10 @@
+ 	keyring_path = fu_path_from_kind(FU_PATH_KIND_LOCALSTATEDIR_PKG);
  	jcat_context_set_keyring_path(self->jcat_context, keyring_path);
- 	sysconfdir = fu_common_get_path(FU_PATH_KIND_SYSCONFDIR);
+ 	sysconfdir = fu_path_from_kind(FU_PATH_KIND_SYSCONFDIR);
 -	pkidir_fw = g_build_filename(sysconfdir, "pki", "fwupd", NULL);
-+        char *datadir = fu_common_get_path (FU_PATH_KIND_DATADIR_PKG);
++	char *datadir = fu_path_from_kind(FU_PATH_KIND_DATADIR_PKG);
 +	pkidir_fw = g_build_filename(datadir, "pki", "fwupd", NULL);
  	jcat_context_add_public_keys(self->jcat_context, pkidir_fw);
 -	pkidir_md = g_build_filename(sysconfdir, "pki", "fwupd-metadata", NULL);
@@ -24,6 +22,3 @@ index a2b7b64..4ef8250 100644
  	jcat_context_add_public_keys(self->jcat_context, pkidir_md);
  
  	/* add some runtime versions of things the daemon depends on */
--- 
-2.34.1
-
