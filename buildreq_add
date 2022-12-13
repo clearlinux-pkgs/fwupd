@@ -22,3 +22,4 @@ gnu-efi-staticdev
 gnu-efi
 popt-dev
 glibc-bin
+pygobject-extras

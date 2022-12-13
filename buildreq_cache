@@ -1,6 +1,7 @@
-1.8.6
+1.8.8
 bash-completion-dev
 curl-dev
+gi-docgen
 pkgconfig(bash-completion)
 pkgconfig(efiboot)
 pkgconfig(efivar)
