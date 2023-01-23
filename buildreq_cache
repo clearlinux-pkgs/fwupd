@@ -1,4 +1,4 @@
-1.8.9
+1.8.10
 bash-completion-dev
 curl-dev
 gi-docgen
@@ -14,4 +14,6 @@ pkgconfig(mbim-glib)
 pkgconfig(mm-glib)
 pkgconfig(qmi-glib)
 pkgconfig(tss2-esys)
+pkgconfig(valgrind)
 pkgconfig(xmlb)
+valgrind
