@@ -4,10 +4,10 @@
 # Using build pattern: meson
 #
 Name     : fwupd
-Version  : 1.8.13
-Release  : 64
-URL      : https://github.com/hughsie/fwupd/archive/1.8.13/fwupd-1.8.13.tar.gz
-Source0  : https://github.com/hughsie/fwupd/archive/1.8.13/fwupd-1.8.13.tar.gz
+Version  : 1.8.14
+Release  : 65
+URL      : https://github.com/hughsie/fwupd/archive/1.8.14/fwupd-1.8.14.tar.gz
+Source0  : https://github.com/hughsie/fwupd/archive/1.8.14/fwupd-1.8.14.tar.gz
 Source1  : fwupd.tmpfiles
 Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
@@ -200,8 +200,8 @@ tests components for the fwupd package.
 
 
 %prep
-%setup -q -n fwupd-1.8.13
-cd %{_builddir}/fwupd-1.8.13
+%setup -q -n fwupd-1.8.14
+cd %{_builddir}/fwupd-1.8.14
 %patch1 -p1
 
 %build
@@ -209,7 +209,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680212967
+export SOURCE_DATE_EPOCH=1680555883
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -374,10 +374,10 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/fwupd-1.8.13/libfu_plugin_modem_manager.so
-/usr/lib64/fwupd-1.8.13/libfwupdengine.so
-/usr/lib64/fwupd-1.8.13/libfwupdplugin.so
-/usr/lib64/fwupd-1.8.13/libfwupdutil.so
+/usr/lib64/fwupd-1.8.14/libfu_plugin_modem_manager.so
+/usr/lib64/fwupd-1.8.14/libfwupdengine.so
+/usr/lib64/fwupd-1.8.14/libfwupdplugin.so
+/usr/lib64/fwupd-1.8.14/libfwupdutil.so
 /usr/lib64/libfwupd.so.2
 /usr/lib64/libfwupd.so.2.0.0
 
