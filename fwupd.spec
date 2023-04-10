@@ -5,7 +5,7 @@
 #
 Name     : fwupd
 Version  : 1.8.14
-Release  : 65
+Release  : 66
 URL      : https://github.com/hughsie/fwupd/archive/1.8.14/fwupd-1.8.14.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.8.14/fwupd-1.8.14.tar.gz
 Source1  : fwupd.tmpfiles
