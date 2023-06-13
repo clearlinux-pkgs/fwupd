@@ -4,10 +4,10 @@
 # Using build pattern: meson
 #
 Name     : fwupd
-Version  : 1.8.14
-Release  : 66
-URL      : https://github.com/hughsie/fwupd/archive/1.8.14/fwupd-1.8.14.tar.gz
-Source0  : https://github.com/hughsie/fwupd/archive/1.8.14/fwupd-1.8.14.tar.gz
+Version  : 1.9.2
+Release  : 67
+URL      : https://github.com/hughsie/fwupd/archive/1.9.2/fwupd-1.9.2.tar.gz
+Source0  : https://github.com/hughsie/fwupd/archive/1.9.2/fwupd-1.9.2.tar.gz
 Source1  : fwupd.tmpfiles
 Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
@@ -185,6 +185,7 @@ man components for the fwupd package.
 %package services
 Summary: services components for the fwupd package.
 Group: Systemd services
+Requires: systemd
 
 %description services
 services components for the fwupd package.
@@ -200,32 +201,39 @@ tests components for the fwupd package.
 
 
 %prep
-%setup -q -n fwupd-1.8.14
-cd %{_builddir}/fwupd-1.8.14
-%patch1 -p1
+%setup -q -n fwupd-1.9.2
+cd %{_builddir}/fwupd-1.9.2
+%patch -P 1 -p1
+pushd ..
+cp -a fwupd-1.9.2 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1680555883
+export SOURCE_DATE_EPOCH=1686675429
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
 -Dplugin_tpm=false  builddir
 ninja -v -C builddir
+CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
+-Dplugin_tpm=false  builddiravx2
+ninja -v -C builddiravx2
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/fwupd
 cp %{_builddir}/fwupd-%{version}/COPYING %{buildroot}/usr/share/package-licenses/fwupd/01a6b4bf79aca9b556822601186afab86e8c4fbf || :
 cp %{_builddir}/fwupd-%{version}/plugins/thunderbolt/tests/COPYING %{buildroot}/usr/share/package-licenses/fwupd/c10b5d1532bdbc2ceae3a33e7ecc8ecbb7f7d260 || :
+DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang fwupd
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
@@ -241,6 +249,7 @@ mv %{buildroot}/etc/pki %{buildroot}/usr/share/fwupd/pki
 mkdir -p %{buildroot}/usr/share/defaults
 mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 ## install_append end
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -253,6 +262,9 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/dbxtool
+/V3/usr/bin/fwupdmgr
+/V3/usr/bin/fwupdtool
 /usr/bin/dbxtool
 /usr/bin/fwupdmgr
 /usr/bin/fwupdtool
@@ -272,17 +284,13 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/dbus-1/system-services/org.freedesktop.fwupd.service
 /usr/share/dbus-1/system.d/org.freedesktop.fwupd.conf
 /usr/share/defaults/fwupd/bios-settings.d/README.md
-/usr/share/defaults/fwupd/daemon.conf
-/usr/share/defaults/fwupd/msr.conf
-/usr/share/defaults/fwupd/redfish.conf
+/usr/share/defaults/fwupd/fwupd.conf
 /usr/share/defaults/fwupd/remotes.d/dell-esrt.conf
 /usr/share/defaults/fwupd/remotes.d/fwupd-tests.conf
 /usr/share/defaults/fwupd/remotes.d/lvfs-testing.conf
 /usr/share/defaults/fwupd/remotes.d/lvfs.conf
 /usr/share/defaults/fwupd/remotes.d/vendor-directory.conf
 /usr/share/defaults/fwupd/remotes.d/vendor.conf
-/usr/share/defaults/fwupd/thunderbolt.conf
-/usr/share/defaults/fwupd/uefi_capsule.conf
 /usr/share/fish/vendor_completions.d/fwupdmgr.fish
 /usr/share/fwupd/add_capsule_header.py
 /usr/share/fwupd/device-tests/8bitdo-nes30pro.json
@@ -374,15 +382,23 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/fwupd-1.8.14/libfu_plugin_modem_manager.so
-/usr/lib64/fwupd-1.8.14/libfwupdengine.so
-/usr/lib64/fwupd-1.8.14/libfwupdplugin.so
-/usr/lib64/fwupd-1.8.14/libfwupdutil.so
+/V3/usr/lib64/fwupd-1.9.2/libfu_plugin_modem_manager.so
+/V3/usr/lib64/fwupd-1.9.2/libfwupdengine.so
+/V3/usr/lib64/fwupd-1.9.2/libfwupdplugin.so
+/V3/usr/lib64/fwupd-1.9.2/libfwupdutil.so
+/V3/usr/lib64/libfwupd.so.2.0.0
+/usr/lib64/fwupd-1.9.2/libfu_plugin_modem_manager.so
+/usr/lib64/fwupd-1.9.2/libfwupdengine.so
+/usr/lib64/fwupd-1.9.2/libfwupdplugin.so
+/usr/lib64/fwupd-1.9.2/libfwupdutil.so
 /usr/lib64/libfwupd.so.2
 /usr/lib64/libfwupd.so.2.0.0
 
 %files libexec
 %defattr(-,root,root,-)
+/V3/usr/libexec/fwupd/fwupd
+/V3/usr/libexec/fwupd/fwupd-detect-cet
+/V3/usr/libexec/fwupd/fwupdoffline
 /usr/libexec/fwupd/fwupd
 /usr/libexec/fwupd/fwupd-detect-cet
 /usr/libexec/fwupd/fwupdoffline
@@ -397,6 +413,8 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/man/man1/dbxtool.1
 /usr/share/man/man1/fwupdmgr.1
 /usr/share/man/man1/fwupdtool.1
+/usr/share/man/man5/fwupd-remotes.d.5
+/usr/share/man/man5/fwupd.conf.5
 
 %files services
 %defattr(-,root,root,-)
@@ -408,12 +426,35 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files tests
 %defattr(-,root,root,-)
+/V3/usr/libexec/installed-tests/fwupd/acpi-dmar-self-test
+/V3/usr/libexec/installed-tests/fwupd/acpi-facp-self-test
+/V3/usr/libexec/installed-tests/fwupd/acpi-ivrs-self-test
+/V3/usr/libexec/installed-tests/fwupd/acpi-phat-self-test
+/V3/usr/libexec/installed-tests/fwupd/ata-self-test
+/V3/usr/libexec/installed-tests/fwupd/bcm57xx-self-test
+/V3/usr/libexec/installed-tests/fwupd/ccgx-dmc-self-test
+/V3/usr/libexec/installed-tests/fwupd/ccgx-self-test
+/V3/usr/libexec/installed-tests/fwupd/elantp-self-test
+/V3/usr/libexec/installed-tests/fwupd/fu-dfu-self-test
+/V3/usr/libexec/installed-tests/fwupd/linux-swap-self-test
+/V3/usr/libexec/installed-tests/fwupd/mtd-self-test
+/V3/usr/libexec/installed-tests/fwupd/nitrokey-self-test
+/V3/usr/libexec/installed-tests/fwupd/nvme-self-test
+/V3/usr/libexec/installed-tests/fwupd/pxi-self-test
+/V3/usr/libexec/installed-tests/fwupd/redfish-self-test
+/V3/usr/libexec/installed-tests/fwupd/synaptics-mst-self-test
+/V3/usr/libexec/installed-tests/fwupd/synaptics-prometheus-self-test
+/V3/usr/libexec/installed-tests/fwupd/synaptics-rmi-self-test
+/V3/usr/libexec/installed-tests/fwupd/uefi-dbx-self-test
+/V3/usr/libexec/installed-tests/fwupd/uf2-self-test
+/V3/usr/libexec/installed-tests/fwupd/wacom-usb-self-test
 /usr/libexec/installed-tests/fwupd/acpi-dmar-self-test
 /usr/libexec/installed-tests/fwupd/acpi-facp-self-test
 /usr/libexec/installed-tests/fwupd/acpi-ivrs-self-test
 /usr/libexec/installed-tests/fwupd/acpi-phat-self-test
 /usr/libexec/installed-tests/fwupd/ata-self-test
 /usr/libexec/installed-tests/fwupd/bcm57xx-self-test
+/usr/libexec/installed-tests/fwupd/ccgx-dmc-self-test
 /usr/libexec/installed-tests/fwupd/ccgx-self-test
 /usr/libexec/installed-tests/fwupd/elantp-self-test
 /usr/libexec/installed-tests/fwupd/fu-dfu-self-test
@@ -429,7 +470,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/libexec/installed-tests/fwupd/synaptics-rmi-self-test
 /usr/libexec/installed-tests/fwupd/uefi-dbx-self-test
 /usr/libexec/installed-tests/fwupd/uf2-self-test
-/usr/libexec/installed-tests/fwupd/vli-self-test
 /usr/libexec/installed-tests/fwupd/wacom-usb-self-test
 /usr/share/installed-tests/fwupd/chassis_type
 /usr/share/installed-tests/fwupd/efi/efivars/CapsuleMax-39b68c46-f7fb-441b-b6ec-16b0f69821f3
