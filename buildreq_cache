@@ -1,10 +1,8 @@
-1.9.2
+1.9.6
 bash-completion-dev
 curl-dev
 gi-docgen
 pkgconfig(bash-completion)
-pkgconfig(efiboot)
-pkgconfig(efivar)
 pkgconfig(fwupd-efi)
 pkgconfig(jcat)
 pkgconfig(libcurl)
@@ -12,8 +10,8 @@ pkgconfig(libgcab-1.0)
 pkgconfig(libprotobuf-c)
 pkgconfig(mbim-glib)
 pkgconfig(mm-glib)
+pkgconfig(passim)
 pkgconfig(qmi-glib)
-pkgconfig(tss2-esys)
 pkgconfig(valgrind)
 pkgconfig(xmlb)
 valgrind

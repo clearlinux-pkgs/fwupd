@@ -4,10 +4,10 @@
 # Using build pattern: meson
 #
 Name     : fwupd
-Version  : 1.9.2
-Release  : 67
-URL      : https://github.com/hughsie/fwupd/archive/1.9.2/fwupd-1.9.2.tar.gz
-Source0  : https://github.com/hughsie/fwupd/archive/1.9.2/fwupd-1.9.2.tar.gz
+Version  : 1.9.6
+Release  : 68
+URL      : https://github.com/hughsie/fwupd/archive/1.9.6/fwupd-1.9.6.tar.gz
+Source0  : https://github.com/hughsie/fwupd/archive/1.9.6/fwupd-1.9.6.tar.gz
 Source1  : fwupd.tmpfiles
 Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
@@ -46,8 +46,6 @@ BuildRequires : pkgconfig(appstream-glib)
 BuildRequires : pkgconfig(bash-completion)
 BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(colorhug)
-BuildRequires : pkgconfig(efiboot)
-BuildRequires : pkgconfig(efivar)
 BuildRequires : pkgconfig(fwupd-efi)
 BuildRequires : pkgconfig(gio-2.0)
 BuildRequires : pkgconfig(gnutls)
@@ -65,7 +63,6 @@ BuildRequires : pkgconfig(mm-glib)
 BuildRequires : pkgconfig(polkit-gobject-1)
 BuildRequires : pkgconfig(qmi-glib)
 BuildRequires : pkgconfig(sqlite3)
-BuildRequires : pkgconfig(tss2-esys)
 BuildRequires : pkgconfig(udev)
 BuildRequires : pkgconfig(valgrind)
 BuildRequires : pkgconfig(xmlb)
@@ -201,11 +198,11 @@ tests components for the fwupd package.
 
 
 %prep
-%setup -q -n fwupd-1.9.2
-cd %{_builddir}/fwupd-1.9.2
+%setup -q -n fwupd-1.9.6
+cd %{_builddir}/fwupd-1.9.6
 %patch -P 1 -p1
 pushd ..
-cp -a fwupd-1.9.2 buildavx2
+cp -a fwupd-1.9.6 buildavx2
 popd
 
 %build
@@ -213,16 +210,22 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1686675429
+export SOURCE_DATE_EPOCH=1696615559
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
+CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS"
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS"
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
+ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
+LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
+meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
 -Dplugin_tpm=false  builddir
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
@@ -230,6 +233,20 @@ CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -O3" CXXFLAGS="$CXXFLAGS 
 ninja -v -C builddiravx2
 
 %install
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CLEAR_INTERMEDIATE_CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS"
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS"
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
+ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
+LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 mkdir -p %{buildroot}/usr/share/package-licenses/fwupd
 cp %{_builddir}/fwupd-%{version}/COPYING %{buildroot}/usr/share/package-licenses/fwupd/01a6b4bf79aca9b556822601186afab86e8c4fbf || :
 cp %{_builddir}/fwupd-%{version}/plugins/thunderbolt/tests/COPYING %{buildroot}/usr/share/package-licenses/fwupd/c10b5d1532bdbc2ceae3a33e7ecc8ecbb7f7d260 || :
@@ -253,7 +270,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/systemd/system-preset/fwupd-refresh.preset
 /usr/lib/systemd/system-shutdown/fwupd.shutdown
 
 %files autostart
@@ -272,6 +288,7 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 %files config
 %defattr(-,root,root,-)
 /usr/lib/modules-load.d/fwupd-msr.conf
+/usr/lib/sysusers.d/fwupd.conf
 /usr/lib/tmpfiles.d/fwupd.conf
 /usr/lib/udev/rules.d/90-fwupd-devices.rules
 
@@ -285,7 +302,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/dbus-1/system.d/org.freedesktop.fwupd.conf
 /usr/share/defaults/fwupd/bios-settings.d/README.md
 /usr/share/defaults/fwupd/fwupd.conf
-/usr/share/defaults/fwupd/remotes.d/dell-esrt.conf
 /usr/share/defaults/fwupd/remotes.d/fwupd-tests.conf
 /usr/share/defaults/fwupd/remotes.d/lvfs-testing.conf
 /usr/share/defaults/fwupd/remotes.d/lvfs.conf
@@ -348,7 +364,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/fwupd/pki/fwupd/GPG-KEY-Linux-Vendor-Firmware-Service
 /usr/share/fwupd/pki/fwupd/LVFS-CA.pem
 /usr/share/fwupd/quirks.d/builtin.quirk.gz
-/usr/share/fwupd/remotes.d/dell-esrt/metadata.xml
 /usr/share/fwupd/remotes.d/vendor/firmware/README.md
 /usr/share/fwupd/simple_client.py
 /usr/share/fwupd/uefi-capsule-ux.tar.xz
@@ -382,15 +397,15 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/fwupd-1.9.2/libfu_plugin_modem_manager.so
-/V3/usr/lib64/fwupd-1.9.2/libfwupdengine.so
-/V3/usr/lib64/fwupd-1.9.2/libfwupdplugin.so
-/V3/usr/lib64/fwupd-1.9.2/libfwupdutil.so
+/V3/usr/lib64/fwupd-1.9.6/libfu_plugin_modem_manager.so
+/V3/usr/lib64/fwupd-1.9.6/libfwupdengine.so
+/V3/usr/lib64/fwupd-1.9.6/libfwupdplugin.so
+/V3/usr/lib64/fwupd-1.9.6/libfwupdutil.so
 /V3/usr/lib64/libfwupd.so.2.0.0
-/usr/lib64/fwupd-1.9.2/libfu_plugin_modem_manager.so
-/usr/lib64/fwupd-1.9.2/libfwupdengine.so
-/usr/lib64/fwupd-1.9.2/libfwupdplugin.so
-/usr/lib64/fwupd-1.9.2/libfwupdutil.so
+/usr/lib64/fwupd-1.9.6/libfu_plugin_modem_manager.so
+/usr/lib64/fwupd-1.9.6/libfwupdengine.so
+/usr/lib64/fwupd-1.9.6/libfwupdplugin.so
+/usr/lib64/fwupd-1.9.6/libfwupdutil.so
 /usr/lib64/libfwupd.so.2
 /usr/lib64/libfwupd.so.2.0.0
 
@@ -415,6 +430,7 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/man/man1/fwupdtool.1
 /usr/share/man/man5/fwupd-remotes.d.5
 /usr/share/man/man5/fwupd.conf.5
+/usr/share/man/man8/fwupd-refresh.service.8
 
 %files services
 %defattr(-,root,root,-)
@@ -447,6 +463,7 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /V3/usr/libexec/installed-tests/fwupd/synaptics-rmi-self-test
 /V3/usr/libexec/installed-tests/fwupd/uefi-dbx-self-test
 /V3/usr/libexec/installed-tests/fwupd/uf2-self-test
+/V3/usr/libexec/installed-tests/fwupd/vli-self-test
 /V3/usr/libexec/installed-tests/fwupd/wacom-usb-self-test
 /usr/libexec/installed-tests/fwupd/acpi-dmar-self-test
 /usr/libexec/installed-tests/fwupd/acpi-facp-self-test
@@ -470,6 +487,7 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/libexec/installed-tests/fwupd/synaptics-rmi-self-test
 /usr/libexec/installed-tests/fwupd/uefi-dbx-self-test
 /usr/libexec/installed-tests/fwupd/uf2-self-test
+/usr/libexec/installed-tests/fwupd/vli-self-test
 /usr/libexec/installed-tests/fwupd/wacom-usb-self-test
 /usr/share/installed-tests/fwupd/chassis_type
 /usr/share/installed-tests/fwupd/efi/efivars/CapsuleMax-39b68c46-f7fb-441b-b6ec-16b0f69821f3
