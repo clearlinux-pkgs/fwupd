@@ -1,7 +1,6 @@
 libarchive.so.13
 libc.so.6
 libcurl.so.4
-libgcab-1.0.so.0
 libgcc_s.so.1
 libgio-2.0.so.0
 libglib-2.0.so.0
@@ -21,3 +20,4 @@ libqmi-glib.so.5
 libsqlite3.so.0
 libsystemd.so.0
 libxmlb.so.2
+libz.so.1
