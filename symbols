@@ -68,6 +68,7 @@ libfwupd.so.2:LIBFWUPD_1.9.1
 libfwupd.so.2:LIBFWUPD_1.9.3
 libfwupd.so.2:LIBFWUPD_1.9.4
 libfwupd.so.2:LIBFWUPD_1.9.6
+libfwupd.so.2:LIBFWUPD_1.9.8
 libfwupd.so.2:fwupd_bios_setting_add_possible_value
 libfwupd.so.2:fwupd_bios_setting_array_from_variant
 libfwupd.so.2:fwupd_bios_setting_from_json
@@ -525,6 +526,8 @@ libfwupd.so.2:fwupd_release_urgency_to_string
 libfwupd.so.2:fwupd_remote_add_flag
 libfwupd.so.2:fwupd_remote_array_from_variant
 libfwupd.so.2:fwupd_remote_build_firmware_uri
+libfwupd.so.2:fwupd_remote_build_metadata_sig_uri
+libfwupd.so.2:fwupd_remote_build_metadata_uri
 libfwupd.so.2:fwupd_remote_build_report_uri
 libfwupd.so.2:fwupd_remote_flag_from_string
 libfwupd.so.2:fwupd_remote_flag_to_string
