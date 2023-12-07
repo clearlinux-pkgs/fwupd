@@ -65,6 +65,7 @@ libfwupd.so.2:LIBFWUPD_1.8.6
 libfwupd.so.2:LIBFWUPD_1.8.7
 libfwupd.so.2:LIBFWUPD_1.8.8
 libfwupd.so.2:LIBFWUPD_1.9.1
+libfwupd.so.2:LIBFWUPD_1.9.10
 libfwupd.so.2:LIBFWUPD_1.9.3
 libfwupd.so.2:LIBFWUPD_1.9.4
 libfwupd.so.2:LIBFWUPD_1.9.6
@@ -289,6 +290,7 @@ libfwupd.so.2:fwupd_device_add_issue
 libfwupd.so.2:fwupd_device_add_problem
 libfwupd.so.2:fwupd_device_add_protocol
 libfwupd.so.2:fwupd_device_add_release
+libfwupd.so.2:fwupd_device_add_request_flag
 libfwupd.so.2:fwupd_device_add_vendor_id
 libfwupd.so.2:fwupd_device_array_ensure_parents
 libfwupd.so.2:fwupd_device_array_filter_flags
@@ -326,6 +328,7 @@ libfwupd.so.2:fwupd_device_get_protocol
 libfwupd.so.2:fwupd_device_get_protocols
 libfwupd.so.2:fwupd_device_get_release_default
 libfwupd.so.2:fwupd_device_get_releases
+libfwupd.so.2:fwupd_device_get_request_flags
 libfwupd.so.2:fwupd_device_get_root
 libfwupd.so.2:fwupd_device_get_serial
 libfwupd.so.2:fwupd_device_get_status
@@ -353,6 +356,7 @@ libfwupd.so.2:fwupd_device_has_icon
 libfwupd.so.2:fwupd_device_has_instance_id
 libfwupd.so.2:fwupd_device_has_problem
 libfwupd.so.2:fwupd_device_has_protocol
+libfwupd.so.2:fwupd_device_has_request_flag
 libfwupd.so.2:fwupd_device_has_vendor_id
 libfwupd.so.2:fwupd_device_id_is_valid
 libfwupd.so.2:fwupd_device_incorporate
@@ -363,6 +367,7 @@ libfwupd.so.2:fwupd_device_problem_to_string
 libfwupd.so.2:fwupd_device_remove_child
 libfwupd.so.2:fwupd_device_remove_flag
 libfwupd.so.2:fwupd_device_remove_problem
+libfwupd.so.2:fwupd_device_remove_request_flag
 libfwupd.so.2:fwupd_device_set_battery_level
 libfwupd.so.2:fwupd_device_set_battery_threshold
 libfwupd.so.2:fwupd_device_set_branch
@@ -381,6 +386,7 @@ libfwupd.so.2:fwupd_device_set_percentage
 libfwupd.so.2:fwupd_device_set_plugin
 libfwupd.so.2:fwupd_device_set_problems
 libfwupd.so.2:fwupd_device_set_protocol
+libfwupd.so.2:fwupd_device_set_request_flags
 libfwupd.so.2:fwupd_device_set_serial
 libfwupd.so.2:fwupd_device_set_status
 libfwupd.so.2:fwupd_device_set_summary
