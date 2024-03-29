@@ -1,2 +1,3 @@
 -Ddocs=none
 -Dplugin_tpm=false
+-Dlzma=disabled

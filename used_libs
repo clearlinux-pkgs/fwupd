@@ -11,7 +11,6 @@ libgudev-1.0.so.0
 libgusb.so.2
 libjcat.so.1
 libjson-glib-1.0.so.0
-liblzma.so.5
 libmbim-glib.so.4
 libmm-glib.so.0
 libpolkit-gobject-1.so.0

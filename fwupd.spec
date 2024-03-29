@@ -7,7 +7,7 @@
 #
 Name     : fwupd
 Version  : 1.9.15
-Release  : 78
+Release  : 79
 URL      : https://github.com/hughsie/fwupd/archive/1.9.15/fwupd-1.9.15.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.9.15/fwupd-1.9.15.tar.gz
 Source1  : fwupd.tmpfiles
@@ -212,7 +212,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1711743592
+export SOURCE_DATE_EPOCH=1711744204
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -229,11 +229,13 @@ ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 export GOAMD64=v2
 meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
--Dplugin_tpm=false  builddir
+-Dplugin_tpm=false \
+-Dlzma=disabled  builddir
 ninja -v -C builddir
 GOAMD64=v3
 CFLAGS="$CFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 " CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -march=x86-64-v3 " meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
--Dplugin_tpm=false  builddiravx2
+-Dplugin_tpm=false \
+-Dlzma=disabled  builddiravx2
 ninja -v -C builddiravx2
 
 %install
