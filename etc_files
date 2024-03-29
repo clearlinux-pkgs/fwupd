@@ -1,0 +1,4 @@
+/builddir/build/BUILDROOT/fwupd-1.9.15-78.x86_64/etc/:
+/builddir/build/BUILDROOT/fwupd-1.9.15-78.x86_64/etc/grub.d:
+35_fwupd
+grub.d
