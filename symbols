@@ -66,6 +66,7 @@ libfwupd.so.2:LIBFWUPD_1.8.7
 libfwupd.so.2:LIBFWUPD_1.8.8
 libfwupd.so.2:LIBFWUPD_1.9.1
 libfwupd.so.2:LIBFWUPD_1.9.10
+libfwupd.so.2:LIBFWUPD_1.9.17
 libfwupd.so.2:LIBFWUPD_1.9.3
 libfwupd.so.2:LIBFWUPD_1.9.4
 libfwupd.so.2:LIBFWUPD_1.9.6
@@ -628,6 +629,7 @@ libfwupd.so.2:fwupd_report_to_json
 libfwupd.so.2:fwupd_report_to_string
 libfwupd.so.2:fwupd_report_to_variant
 libfwupd.so.2:fwupd_request_add_flag
+libfwupd.so.2:fwupd_request_emit_invalidate
 libfwupd.so.2:fwupd_request_flag_from_string
 libfwupd.so.2:fwupd_request_flag_to_string
 libfwupd.so.2:fwupd_request_from_variant

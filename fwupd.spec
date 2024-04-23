@@ -6,10 +6,10 @@
 # autospec commit: 5905be9
 #
 Name     : fwupd
-Version  : 1.9.16
-Release  : 80
-URL      : https://github.com/hughsie/fwupd/archive/1.9.16/fwupd-1.9.16.tar.gz
-Source0  : https://github.com/hughsie/fwupd/archive/1.9.16/fwupd-1.9.16.tar.gz
+Version  : 1.9.17
+Release  : 81
+URL      : https://github.com/hughsie/fwupd/archive/1.9.17/fwupd-1.9.17.tar.gz
+Source0  : https://github.com/hughsie/fwupd/archive/1.9.17/fwupd-1.9.17.tar.gz
 Source1  : fwupd.tmpfiles
 Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
@@ -201,11 +201,11 @@ tests components for the fwupd package.
 
 
 %prep
-%setup -q -n fwupd-1.9.16
-cd %{_builddir}/fwupd-1.9.16
+%setup -q -n fwupd-1.9.17
+cd %{_builddir}/fwupd-1.9.17
 %patch -P 1 -p1
 pushd ..
-cp -a fwupd-1.9.16 buildavx2
+cp -a fwupd-1.9.17 buildavx2
 popd
 
 %build
@@ -213,7 +213,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1713663103
+export SOURCE_DATE_EPOCH=1713890603
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -231,12 +231,14 @@ LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 export GOAMD64=v2
 meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
 -Dplugin_tpm=false \
--Dlzma=disabled  builddir
+-Dlzma=disabled \
+-Dplugin_flashrom=false  builddir
 ninja -v -C builddir
 GOAMD64=v3
 CFLAGS="$CFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 " CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -march=x86-64-v3 " meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
 -Dplugin_tpm=false \
--Dlzma=disabled  builddiravx2
+-Dlzma=disabled \
+-Dplugin_flashrom=false  builddiravx2
 ninja -v -C builddiravx2
 
 %install
@@ -406,15 +408,15 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/fwupd-1.9.16/libfu_plugin_modem_manager.so
-/V3/usr/lib64/fwupd-1.9.16/libfwupdengine.so
-/V3/usr/lib64/fwupd-1.9.16/libfwupdplugin.so
-/V3/usr/lib64/fwupd-1.9.16/libfwupdutil.so
+/V3/usr/lib64/fwupd-1.9.17/libfu_plugin_modem_manager.so
+/V3/usr/lib64/fwupd-1.9.17/libfwupdengine.so
+/V3/usr/lib64/fwupd-1.9.17/libfwupdplugin.so
+/V3/usr/lib64/fwupd-1.9.17/libfwupdutil.so
 /V3/usr/lib64/libfwupd.so.2.0.0
-/usr/lib64/fwupd-1.9.16/libfu_plugin_modem_manager.so
-/usr/lib64/fwupd-1.9.16/libfwupdengine.so
-/usr/lib64/fwupd-1.9.16/libfwupdplugin.so
-/usr/lib64/fwupd-1.9.16/libfwupdutil.so
+/usr/lib64/fwupd-1.9.17/libfu_plugin_modem_manager.so
+/usr/lib64/fwupd-1.9.17/libfwupdengine.so
+/usr/lib64/fwupd-1.9.17/libfwupdplugin.so
+/usr/lib64/fwupd-1.9.17/libfwupdutil.so
 /usr/lib64/libfwupd.so.2
 /usr/lib64/libfwupd.so.2.0.0
 

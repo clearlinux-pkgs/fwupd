@@ -1,3 +1,4 @@
 -Ddocs=none
 -Dplugin_tpm=false
 -Dlzma=disabled
+-Dplugin_flashrom=false
