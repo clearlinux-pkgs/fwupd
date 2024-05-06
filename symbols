@@ -67,6 +67,7 @@ libfwupd.so.2:LIBFWUPD_1.8.8
 libfwupd.so.2:LIBFWUPD_1.9.1
 libfwupd.so.2:LIBFWUPD_1.9.10
 libfwupd.so.2:LIBFWUPD_1.9.17
+libfwupd.so.2:LIBFWUPD_1.9.19
 libfwupd.so.2:LIBFWUPD_1.9.3
 libfwupd.so.2:LIBFWUPD_1.9.4
 libfwupd.so.2:LIBFWUPD_1.9.6
@@ -127,6 +128,7 @@ libfwupd.so.2:fwupd_client_download_bytes
 libfwupd.so.2:fwupd_client_download_bytes_async
 libfwupd.so.2:fwupd_client_download_bytes_finish
 libfwupd.so.2:fwupd_client_download_file
+libfwupd.so.2:fwupd_client_download_set_retries
 libfwupd.so.2:fwupd_client_emulation_load
 libfwupd.so.2:fwupd_client_emulation_load_async
 libfwupd.so.2:fwupd_client_emulation_load_finish
