@@ -6,10 +6,10 @@
 # autospec commit: 5905be9
 #
 Name     : fwupd
-Version  : 1.9.19
-Release  : 83
-URL      : https://github.com/hughsie/fwupd/archive/1.9.19/fwupd-1.9.19.tar.gz
-Source0  : https://github.com/hughsie/fwupd/archive/1.9.19/fwupd-1.9.19.tar.gz
+Version  : 1.9.20
+Release  : 84
+URL      : https://github.com/hughsie/fwupd/archive/1.9.20/fwupd-1.9.20.tar.gz
+Source0  : https://github.com/hughsie/fwupd/archive/1.9.20/fwupd-1.9.20.tar.gz
 Source1  : fwupd.tmpfiles
 Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
@@ -201,11 +201,11 @@ tests components for the fwupd package.
 
 
 %prep
-%setup -q -n fwupd-1.9.19
-cd %{_builddir}/fwupd-1.9.19
+%setup -q -n fwupd-1.9.20
+cd %{_builddir}/fwupd-1.9.20
 %patch -P 1 -p1
 pushd ..
-cp -a fwupd-1.9.19 buildavx2
+cp -a fwupd-1.9.20 buildavx2
 popd
 
 %build
@@ -213,7 +213,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1715005773
+export SOURCE_DATE_EPOCH=1716259631
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -408,15 +408,15 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/fwupd-1.9.19/libfu_plugin_modem_manager.so
-/V3/usr/lib64/fwupd-1.9.19/libfwupdengine.so
-/V3/usr/lib64/fwupd-1.9.19/libfwupdplugin.so
-/V3/usr/lib64/fwupd-1.9.19/libfwupdutil.so
+/V3/usr/lib64/fwupd-1.9.20/libfu_plugin_modem_manager.so
+/V3/usr/lib64/fwupd-1.9.20/libfwupdengine.so
+/V3/usr/lib64/fwupd-1.9.20/libfwupdplugin.so
+/V3/usr/lib64/fwupd-1.9.20/libfwupdutil.so
 /V3/usr/lib64/libfwupd.so.2.0.0
-/usr/lib64/fwupd-1.9.19/libfu_plugin_modem_manager.so
-/usr/lib64/fwupd-1.9.19/libfwupdengine.so
-/usr/lib64/fwupd-1.9.19/libfwupdplugin.so
-/usr/lib64/fwupd-1.9.19/libfwupdutil.so
+/usr/lib64/fwupd-1.9.20/libfu_plugin_modem_manager.so
+/usr/lib64/fwupd-1.9.20/libfwupdengine.so
+/usr/lib64/fwupd-1.9.20/libfwupdplugin.so
+/usr/lib64/fwupd-1.9.20/libfwupdutil.so
 /usr/lib64/libfwupd.so.2
 /usr/lib64/libfwupd.so.2.0.0
 

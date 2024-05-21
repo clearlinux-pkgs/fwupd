@@ -68,6 +68,7 @@ libfwupd.so.2:LIBFWUPD_1.9.1
 libfwupd.so.2:LIBFWUPD_1.9.10
 libfwupd.so.2:LIBFWUPD_1.9.17
 libfwupd.so.2:LIBFWUPD_1.9.19
+libfwupd.so.2:LIBFWUPD_1.9.20
 libfwupd.so.2:LIBFWUPD_1.9.3
 libfwupd.so.2:LIBFWUPD_1.9.4
 libfwupd.so.2:LIBFWUPD_1.9.6
@@ -117,6 +118,7 @@ libfwupd.so.2:fwupd_client_activate
 libfwupd.so.2:fwupd_client_activate_async
 libfwupd.so.2:fwupd_client_activate_finish
 libfwupd.so.2:fwupd_client_add_hint
+libfwupd.so.2:fwupd_client_build_report_devices
 libfwupd.so.2:fwupd_client_clear_results
 libfwupd.so.2:fwupd_client_clear_results_async
 libfwupd.so.2:fwupd_client_clear_results_finish
@@ -277,6 +279,9 @@ libfwupd.so.2:fwupd_client_update_metadata_bytes_finish
 libfwupd.so.2:fwupd_client_upload_bytes
 libfwupd.so.2:fwupd_client_upload_bytes_async
 libfwupd.so.2:fwupd_client_upload_bytes_finish
+libfwupd.so.2:fwupd_client_upload_report
+libfwupd.so.2:fwupd_client_upload_report_async
+libfwupd.so.2:fwupd_client_upload_report_finish
 libfwupd.so.2:fwupd_client_verify
 libfwupd.so.2:fwupd_client_verify_async
 libfwupd.so.2:fwupd_client_verify_finish
