@@ -7,7 +7,7 @@
 #
 Name     : fwupd
 Version  : 1.9.21
-Release  : 85
+Release  : 86
 URL      : https://github.com/hughsie/fwupd/archive/1.9.21/fwupd-1.9.21.tar.gz
 Source0  : https://github.com/hughsie/fwupd/archive/1.9.21/fwupd-1.9.21.tar.gz
 Source1  : fwupd.tmpfiles
