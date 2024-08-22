@@ -8,12 +8,12 @@
 # Source0 file verified with key 0x17ACBA8DFA970E17 (richard@hughsie.com)
 #
 Name     : fwupd
-Version  : 1.9.23
-Release  : 88
-URL      : https://github.com/fwupd/fwupd/releases/download/1.9.23/fwupd-1.9.23.tar.xz
-Source0  : https://github.com/fwupd/fwupd/releases/download/1.9.23/fwupd-1.9.23.tar.xz
+Version  : 1.9.24
+Release  : 89
+URL      : https://github.com/fwupd/fwupd/releases/download/1.9.24/fwupd-1.9.24.tar.xz
+Source0  : https://github.com/fwupd/fwupd/releases/download/1.9.24/fwupd-1.9.24.tar.xz
 Source1  : fwupd.tmpfiles
-Source2  : https://github.com/fwupd/fwupd/releases/download/1.9.23/fwupd-1.9.23.tar.xz.asc
+Source2  : https://github.com/fwupd/fwupd/releases/download/1.9.24/fwupd-1.9.24.tar.xz.asc
 Source3  : 17ACBA8DFA970E17.pkey
 Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
@@ -211,11 +211,11 @@ chmod 700 .gnupg
 gpg --homedir .gnupg --import %{SOURCE3}
 gpg --homedir .gnupg --status-fd 1 --verify %{SOURCE2} %{SOURCE0} > gpg.status
 grep -E '^\[GNUPG:\] (GOODSIG|EXPKEYSIG) 17ACBA8DFA970E17' gpg.status
-%setup -q -n fwupd-1.9.23
-cd %{_builddir}/fwupd-1.9.23
+%setup -q -n fwupd-1.9.24
+cd %{_builddir}/fwupd-1.9.24
 %patch -P 1 -p1
 pushd ..
-cp -a fwupd-1.9.23 buildavx2
+cp -a fwupd-1.9.24 buildavx2
 popd
 
 %build
@@ -223,7 +223,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1722869530
+export SOURCE_DATE_EPOCH=1724287447
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -418,15 +418,15 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/fwupd-1.9.23/libfu_plugin_modem_manager.so
-/V3/usr/lib64/fwupd-1.9.23/libfwupdengine.so
-/V3/usr/lib64/fwupd-1.9.23/libfwupdplugin.so
-/V3/usr/lib64/fwupd-1.9.23/libfwupdutil.so
+/V3/usr/lib64/fwupd-1.9.24/libfu_plugin_modem_manager.so
+/V3/usr/lib64/fwupd-1.9.24/libfwupdengine.so
+/V3/usr/lib64/fwupd-1.9.24/libfwupdplugin.so
+/V3/usr/lib64/fwupd-1.9.24/libfwupdutil.so
 /V3/usr/lib64/libfwupd.so.2.0.0
-/usr/lib64/fwupd-1.9.23/libfu_plugin_modem_manager.so
-/usr/lib64/fwupd-1.9.23/libfwupdengine.so
-/usr/lib64/fwupd-1.9.23/libfwupdplugin.so
-/usr/lib64/fwupd-1.9.23/libfwupdutil.so
+/usr/lib64/fwupd-1.9.24/libfu_plugin_modem_manager.so
+/usr/lib64/fwupd-1.9.24/libfwupdengine.so
+/usr/lib64/fwupd-1.9.24/libfwupdplugin.so
+/usr/lib64/fwupd-1.9.24/libfwupdutil.so
 /usr/lib64/libfwupd.so.2
 /usr/lib64/libfwupd.so.2.0.0
 
