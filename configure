@@ -1,4 +1,5 @@
--Ddocs=none
--Dplugin_tpm=false
+-Ddocs=disabled
+-Dplugin_tpm=disabled
 -Dlzma=disabled
--Dplugin_flashrom=false
+-Dplugin_flashrom=disabled
+-Dvendor_ids_dir=/usr/share/hardinfo

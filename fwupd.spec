@@ -8,12 +8,12 @@
 # Source0 file verified with key 0x17ACBA8DFA970E17 (richard@hughsie.com)
 #
 Name     : fwupd
-Version  : 1.9.25
-Release  : 90
-URL      : https://github.com/fwupd/fwupd/releases/download/1.9.25/fwupd-1.9.25.tar.xz
-Source0  : https://github.com/fwupd/fwupd/releases/download/1.9.25/fwupd-1.9.25.tar.xz
+Version  : 2.0.1
+Release  : 91
+URL      : https://github.com/fwupd/fwupd/releases/download/2.0.1/fwupd-2.0.1.tar.xz
+Source0  : https://github.com/fwupd/fwupd/releases/download/2.0.1/fwupd-2.0.1.tar.xz
 Source1  : fwupd.tmpfiles
-Source2  : https://github.com/fwupd/fwupd/releases/download/1.9.25/fwupd-1.9.25.tar.xz.asc
+Source2  : https://github.com/fwupd/fwupd/releases/download/2.0.1/fwupd-2.0.1.tar.xz.asc
 Source3  : 17ACBA8DFA970E17.pkey
 Summary  : A simple daemon to allow session software to update firmware
 Group    : Development/Tools
@@ -45,6 +45,7 @@ BuildRequires : gnupg
 BuildRequires : gobject-introspection-dev
 BuildRequires : gpgme-dev
 BuildRequires : gtk-doc
+BuildRequires : hardinfo
 BuildRequires : help2man
 BuildRequires : libgpg-error-dev
 BuildRequires : libsmbios-dev
@@ -53,7 +54,6 @@ BuildRequires : pkgconfig(appstream-glib)
 BuildRequires : pkgconfig(bash-completion)
 BuildRequires : pkgconfig(cairo)
 BuildRequires : pkgconfig(colorhug)
-BuildRequires : pkgconfig(fwupd-efi)
 BuildRequires : pkgconfig(gio-2.0)
 BuildRequires : pkgconfig(gnutls)
 BuildRequires : pkgconfig(gudev-1.0)
@@ -61,7 +61,7 @@ BuildRequires : pkgconfig(gusb)
 BuildRequires : pkgconfig(jcat)
 BuildRequires : pkgconfig(json-glib-1.0)
 BuildRequires : pkgconfig(libcurl)
-BuildRequires : pkgconfig(libdrm_amdgpu)
+BuildRequires : pkgconfig(libdrm)
 BuildRequires : pkgconfig(libelf)
 BuildRequires : pkgconfig(libprotobuf-c)
 BuildRequires : pkgconfig(libsoup-2.4)
@@ -211,11 +211,11 @@ chmod 700 .gnupg
 gpg --homedir .gnupg --import %{SOURCE3}
 gpg --homedir .gnupg --status-fd 1 --verify %{SOURCE2} %{SOURCE0} > gpg.status
 grep -E '^\[GNUPG:\] (GOODSIG|EXPKEYSIG) 17ACBA8DFA970E17' gpg.status
-%setup -q -n fwupd-1.9.25
-cd %{_builddir}/fwupd-1.9.25
+%setup -q -n fwupd-2.0.1
+cd %{_builddir}/fwupd-2.0.1
 %patch -P 1 -p1
 pushd ..
-cp -a fwupd-1.9.25 buildavx2
+cp -a fwupd-2.0.1 buildavx2
 popd
 
 %build
@@ -223,7 +223,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1727264136
+export SOURCE_DATE_EPOCH=1729095529
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -239,16 +239,18 @@ FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 export GOAMD64=v2
-meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
--Dplugin_tpm=false \
+meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=disabled \
+-Dplugin_tpm=disabled \
 -Dlzma=disabled \
--Dplugin_flashrom=false  builddir
+-Dplugin_flashrom=disabled \
+-Dvendor_ids_dir=/usr/share/hardinfo  builddir
 ninja -v -C builddir
 GOAMD64=v3
-CFLAGS="$CFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 " CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -march=x86-64-v3 " meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=none \
--Dplugin_tpm=false \
+CFLAGS="$CFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 " CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -Wl,-z,x86-64-v3 " LDFLAGS="$LDFLAGS -march=x86-64-v3 " meson --libdir=lib64 --prefix=/usr --buildtype=plain -Ddocs=disabled \
+-Dplugin_tpm=disabled \
 -Dlzma=disabled \
--Dplugin_flashrom=false  builddiravx2
+-Dplugin_flashrom=disabled \
+-Dvendor_ids_dir=/usr/share/hardinfo  builddiravx2
 ninja -v -C builddiravx2
 
 %install
@@ -281,7 +283,7 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/fwupd.conf
 rm -f %{buildroot}*/var/lib/fwupd/builder/README.md
 ## install_append content
 rm -fr %{buildroot}/usr/share/fwupd/dbus-1
-rm %{buildroot}/usr/lib/systemd/system/system-update.target.wants/fwupd-offline-update.service
+rm -f %{buildroot}/usr/lib/systemd/system/system-update.target.wants/fwupd-offline-update.service
 mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
 ln -s ../fwupd.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/fwupd.service
 mv %{buildroot}/etc/pki %{buildroot}/usr/share/fwupd/pki
@@ -312,7 +314,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/lib/modules-load.d/fwupd-msr.conf
 /usr/lib/sysusers.d/fwupd.conf
 /usr/lib/tmpfiles.d/fwupd.conf
-/usr/lib/udev/rules.d/90-fwupd-devices.rules
 
 %files data
 %defattr(-,root,root,-)
@@ -332,29 +333,44 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/fwupd/device-tests/8bitdo-nes30pro.json
 /usr/share/fwupd/device-tests/8bitdo-sf30pro.json
 /usr/share/fwupd/device-tests/8bitdo-sfc30.json
+/usr/share/fwupd/device-tests/acer-d501.json
 /usr/share/fwupd/device-tests/aiaiai-h05.json
+/usr/share/fwupd/device-tests/algoltek-ag9421.json
+/usr/share/fwupd/device-tests/analogix-anx7518.json
+/usr/share/fwupd/device-tests/aver-fone540.json
 /usr/share/fwupd/device-tests/bizlink-no-sku-vli.json
+/usr/share/fwupd/device-tests/caldigit-element.json
+/usr/share/fwupd/device-tests/caldigit-ts4-tbt.json
+/usr/share/fwupd/device-tests/caldigit-ts4.json
 /usr/share/fwupd/device-tests/corsair-katar-pro-xt.json
 /usr/share/fwupd/device-tests/corsair-sabre-pro.json
 /usr/share/fwupd/device-tests/corsair-sabre-rgb-pro.json
 /usr/share/fwupd/device-tests/dell-kh08p.json
 /usr/share/fwupd/device-tests/dell-wd19tb.json
+/usr/share/fwupd/device-tests/fpc-lenfy-moh.json
 /usr/share/fwupd/device-tests/fwupd-a3bu-xplained.json
 /usr/share/fwupd/device-tests/fwupd-at90usbkey.json
+/usr/share/fwupd/device-tests/google-servo-micro.json
+/usr/share/fwupd/device-tests/hp-910-bt-keyboard.json
+/usr/share/fwupd/device-tests/hp-910-bt-mouse.json
 /usr/share/fwupd/device-tests/hp-dock-g5.json
+/usr/share/fwupd/device-tests/huddly-s1.json
 /usr/share/fwupd/device-tests/hughski-colorhug-plus.json
 /usr/share/fwupd/device-tests/hughski-colorhug.json
 /usr/share/fwupd/device-tests/hughski-colorhug2.json
 /usr/share/fwupd/device-tests/hyper-no-sku-vli.json
+/usr/share/fwupd/device-tests/jabra-evolve2-75.json
 /usr/share/fwupd/device-tests/jabra-speak-410.json
 /usr/share/fwupd/device-tests/jabra-speak-510.json
 /usr/share/fwupd/device-tests/jabra-speak-710.json
+/usr/share/fwupd/device-tests/legion-hid2.json
 /usr/share/fwupd/device-tests/lenovo-03x7168.json
 /usr/share/fwupd/device-tests/lenovo-03x7605.json
 /usr/share/fwupd/device-tests/lenovo-03x7608-vli.json
 /usr/share/fwupd/device-tests/lenovo-03x7609-cxaudio.json
 /usr/share/fwupd/device-tests/lenovo-40au0065-vli.json
 /usr/share/fwupd/device-tests/lenovo-GX90T33021-vli.json
+/usr/share/fwupd/device-tests/lenovo-pcsn720.json
 /usr/share/fwupd/device-tests/logitech-bolt-receiver.json
 /usr/share/fwupd/device-tests/logitech-k780.json
 /usr/share/fwupd/device-tests/logitech-m650.json
@@ -364,13 +380,23 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/fwupd/device-tests/logitech-rqr12.json
 /usr/share/fwupd/device-tests/logitech-rqr24-signed.json
 /usr/share/fwupd/device-tests/logitech-rqr24.json
+/usr/share/fwupd/device-tests/nordic-hid-nrf52840-b0.json
 /usr/share/fwupd/device-tests/nordic-hid-nrf52840-mcuboot.json
+/usr/share/fwupd/device-tests/parade-ps5512evb.json
+/usr/share/fwupd/device-tests/pixart-rf-2862-dongle.json
+/usr/share/fwupd/device-tests/pixart-rf-GCBBTM25.json
+/usr/share/fwupd/device-tests/qualcomm-qcc5171.json
 /usr/share/fwupd/device-tests/realtek-rts5423.json
 /usr/share/fwupd/device-tests/realtek-rts5855.json
+/usr/share/fwupd/device-tests/steelseries-aerox-3-wireless.json
+/usr/share/fwupd/device-tests/steelseries-rival-3-wireless.json
 /usr/share/fwupd/device-tests/synaptics-prometheus.json
+/usr/share/fwupd/device-tests/synaptics-vmm9430evb.json
 /usr/share/fwupd/device-tests/ugreen-cm260.json
+/usr/share/fwupd/device-tests/wacom-g14t.json
 /usr/share/fwupd/device-tests/wacom-intuos-bt-m.json
 /usr/share/fwupd/device-tests/wacom-intuos-bt-s.json
+/usr/share/fwupd/device-tests/wistron-dock-40b7.json
 /usr/share/fwupd/firmware_packager.py
 /usr/share/fwupd/host-emulate.d/thinkpad-p1-iommu.json.gz
 /usr/share/fwupd/install_dell_bios_exe.py
@@ -388,6 +414,8 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/fwupd/simple_client.py
 /usr/share/fwupd/uefi-capsule-ux.tar.xz
 /usr/share/gir-1.0/*.gir
+/usr/share/icons/hicolor/128x128/apps/org.freedesktop.fwupd.png
+/usr/share/icons/hicolor/64x64/apps/org.freedesktop.fwupd.png
 /usr/share/icons/hicolor/scalable/apps/org.freedesktop.fwupd.svg
 /usr/share/metainfo/org.freedesktop.fwupd.metainfo.xml
 /usr/share/polkit-1/actions/org.freedesktop.fwupd.policy
@@ -397,47 +425,46 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/fwupd-1/fwupd.h
-/usr/include/fwupd-1/libfwupd/fwupd-bios-setting.h
-/usr/include/fwupd-1/libfwupd/fwupd-build.h
-/usr/include/fwupd-1/libfwupd/fwupd-client-sync.h
-/usr/include/fwupd-1/libfwupd/fwupd-client.h
-/usr/include/fwupd-1/libfwupd/fwupd-common.h
-/usr/include/fwupd-1/libfwupd/fwupd-device.h
-/usr/include/fwupd-1/libfwupd/fwupd-enums.h
-/usr/include/fwupd-1/libfwupd/fwupd-error.h
-/usr/include/fwupd-1/libfwupd/fwupd-plugin.h
-/usr/include/fwupd-1/libfwupd/fwupd-release.h
-/usr/include/fwupd-1/libfwupd/fwupd-remote.h
-/usr/include/fwupd-1/libfwupd/fwupd-report.h
-/usr/include/fwupd-1/libfwupd/fwupd-request.h
-/usr/include/fwupd-1/libfwupd/fwupd-security-attr.h
-/usr/include/fwupd-1/libfwupd/fwupd-version.h
+/usr/include/fwupd-3/fwupd.h
+/usr/include/fwupd-3/libfwupd/fwupd-bios-setting.h
+/usr/include/fwupd-3/libfwupd/fwupd-build.h
+/usr/include/fwupd-3/libfwupd/fwupd-client-sync.h
+/usr/include/fwupd-3/libfwupd/fwupd-client.h
+/usr/include/fwupd-3/libfwupd/fwupd-codec.h
+/usr/include/fwupd-3/libfwupd/fwupd-common.h
+/usr/include/fwupd-3/libfwupd/fwupd-device.h
+/usr/include/fwupd-3/libfwupd/fwupd-enums.h
+/usr/include/fwupd-3/libfwupd/fwupd-error.h
+/usr/include/fwupd-3/libfwupd/fwupd-plugin.h
+/usr/include/fwupd-3/libfwupd/fwupd-release.h
+/usr/include/fwupd-3/libfwupd/fwupd-remote.h
+/usr/include/fwupd-3/libfwupd/fwupd-report.h
+/usr/include/fwupd-3/libfwupd/fwupd-request.h
+/usr/include/fwupd-3/libfwupd/fwupd-security-attr.h
+/usr/include/fwupd-3/libfwupd/fwupd-version.h
 /usr/lib64/libfwupd.so
 /usr/lib64/pkgconfig/fwupd.pc
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/fwupd-1.9.25/libfu_plugin_modem_manager.so
-/V3/usr/lib64/fwupd-1.9.25/libfwupdengine.so
-/V3/usr/lib64/fwupd-1.9.25/libfwupdplugin.so
-/V3/usr/lib64/fwupd-1.9.25/libfwupdutil.so
-/V3/usr/lib64/libfwupd.so.2.0.0
-/usr/lib64/fwupd-1.9.25/libfu_plugin_modem_manager.so
-/usr/lib64/fwupd-1.9.25/libfwupdengine.so
-/usr/lib64/fwupd-1.9.25/libfwupdplugin.so
-/usr/lib64/fwupd-1.9.25/libfwupdutil.so
-/usr/lib64/libfwupd.so.2
-/usr/lib64/libfwupd.so.2.0.0
+/V3/usr/lib64/fwupd-2.0.1/libfu_plugin_modem_manager.so
+/V3/usr/lib64/fwupd-2.0.1/libfwupdengine.so
+/V3/usr/lib64/fwupd-2.0.1/libfwupdplugin.so
+/V3/usr/lib64/fwupd-2.0.1/libfwupdutil.so
+/V3/usr/lib64/libfwupd.so.3.0.0
+/usr/lib64/fwupd-2.0.1/libfu_plugin_modem_manager.so
+/usr/lib64/fwupd-2.0.1/libfwupdengine.so
+/usr/lib64/fwupd-2.0.1/libfwupdplugin.so
+/usr/lib64/fwupd-2.0.1/libfwupdutil.so
+/usr/lib64/libfwupd.so.3
+/usr/lib64/libfwupd.so.3.0.0
 
 %files libexec
 %defattr(-,root,root,-)
 /V3/usr/libexec/fwupd/fwupd
 /V3/usr/libexec/fwupd/fwupd-detect-cet
-/V3/usr/libexec/fwupd/fwupdoffline
 /usr/libexec/fwupd/fwupd
 /usr/libexec/fwupd/fwupd-detect-cet
-/usr/libexec/fwupd/fwupdoffline
 
 %files license
 %defattr(0644,root,root,0755)
@@ -456,7 +483,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 %files services
 %defattr(-,root,root,-)
 %exclude /usr/lib/systemd/system/multi-user.target.wants/fwupd.service
-/usr/lib/systemd/system/fwupd-offline-update.service
 /usr/lib/systemd/system/fwupd-refresh.service
 /usr/lib/systemd/system/fwupd-refresh.timer
 /usr/lib/systemd/system/fwupd.service
@@ -473,6 +499,7 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /V3/usr/libexec/installed-tests/fwupd/ccgx-self-test
 /V3/usr/libexec/installed-tests/fwupd/elantp-self-test
 /V3/usr/libexec/installed-tests/fwupd/fu-dfu-self-test
+/V3/usr/libexec/installed-tests/fwupd/fwupdplugin-self-test
 /V3/usr/libexec/installed-tests/fwupd/linux-swap-self-test
 /V3/usr/libexec/installed-tests/fwupd/mtd-self-test
 /V3/usr/libexec/installed-tests/fwupd/nitrokey-self-test
@@ -496,6 +523,7 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/libexec/installed-tests/fwupd/ccgx-self-test
 /usr/libexec/installed-tests/fwupd/elantp-self-test
 /usr/libexec/installed-tests/fwupd/fu-dfu-self-test
+/usr/libexec/installed-tests/fwupd/fwupdplugin-self-test
 /usr/libexec/installed-tests/fwupd/linux-swap-self-test
 /usr/libexec/installed-tests/fwupd/mtd-self-test
 /usr/libexec/installed-tests/fwupd/nitrokey-self-test
@@ -509,8 +537,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/libexec/installed-tests/fwupd/uf2-self-test
 /usr/libexec/installed-tests/fwupd/vli-self-test
 /usr/libexec/installed-tests/fwupd/wacom-usb-self-test
-/usr/share/installed-tests/fwupd/chassis_type
-/usr/share/installed-tests/fwupd/efi/efivars/CapsuleMax-39b68c46-f7fb-441b-b6ec-16b0f69821f3
 /usr/share/installed-tests/fwupd/efi/esrt/entries/entry0/capsule_flags
 /usr/share/installed-tests/fwupd/efi/esrt/entries/entry0/fw_class
 /usr/share/installed-tests/fwupd/efi/esrt/entries/entry0/fw_type
@@ -523,7 +549,6 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/installed-tests/fwupd/fakedevice124.cab
 /usr/share/installed-tests/fwupd/fakedevice124.jcat
 /usr/share/installed-tests/fwupd/fakedevice124.metainfo.xml
-/usr/share/installed-tests/fwupd/firmware.zip
 /usr/share/installed-tests/fwupd/fwupd-tests.xml
 /usr/share/installed-tests/fwupd/fwupd.sh
 /usr/share/installed-tests/fwupd/fwupd.test
@@ -533,25 +558,81 @@ mv %{buildroot}/etc/fwupd %{buildroot}/usr/share/defaults/fwupd
 /usr/share/installed-tests/fwupd/fwupdmgr.test
 /usr/share/installed-tests/fwupd/fwupdtool.sh
 /usr/share/installed-tests/fwupd/fwupdtool.test
-/usr/share/installed-tests/fwupd/sys_vendor
+/usr/share/installed-tests/fwupd/tests/America/New_York
 /usr/share/installed-tests/fwupd/tests/bcm57xx.builder.xml
+/usr/share/installed-tests/fwupd/tests/cab-compressed.builder.xml
+/usr/share/installed-tests/fwupd/tests/cab.builder.xml
 /usr/share/installed-tests/fwupd/tests/ccgx-dmc.builder.xml
 /usr/share/installed-tests/fwupd/tests/ccgx.builder.xml
+/usr/share/installed-tests/fwupd/tests/cfu-offer.builder.xml
+/usr/share/installed-tests/fwupd/tests/cfu-payload.builder.xml
+/usr/share/installed-tests/fwupd/tests/chassis_type
+/usr/share/installed-tests/fwupd/tests/colorhug/colorhug-als-3.0.2.cab
+/usr/share/installed-tests/fwupd/tests/csv.builder.xml
+/usr/share/installed-tests/fwupd/tests/dfu.builder.xml
+/usr/share/installed-tests/fwupd/tests/dfuse.builder.xml
 /usr/share/installed-tests/fwupd/tests/dmi/tables/DMI
 /usr/share/installed-tests/fwupd/tests/dmi/tables/smbios_entry_point
 /usr/share/installed-tests/fwupd/tests/dmi/tables64/DMI
 /usr/share/installed-tests/fwupd/tests/dmi/tables64/smbios_entry_point
+/usr/share/installed-tests/fwupd/tests/edid.builder.xml
+/usr/share/installed-tests/fwupd/tests/efi-file.builder.xml
+/usr/share/installed-tests/fwupd/tests/efi-filesystem.builder.xml
+/usr/share/installed-tests/fwupd/tests/efi-load-option-hive.builder.xml
+/usr/share/installed-tests/fwupd/tests/efi-load-option.builder.xml
+/usr/share/installed-tests/fwupd/tests/efi-lz77-legacy.bin
+/usr/share/installed-tests/fwupd/tests/efi-lz77-tiano.bin
+/usr/share/installed-tests/fwupd/tests/efi-section.builder.xml
+/usr/share/installed-tests/fwupd/tests/efi-signature-list.builder.xml
+/usr/share/installed-tests/fwupd/tests/efi-volume.builder.xml
+/usr/share/installed-tests/fwupd/tests/efi/efivars/BootNext-8be4df61-93ca-11d2-aa0d-00e098032b8c
 /usr/share/installed-tests/fwupd/tests/efi/efivars/RedfishIndications-16faa37e-4b6a-4891-9028-242de65a3b70
 /usr/share/installed-tests/fwupd/tests/efi/efivars/RedfishOSCredentials-16faa37e-4b6a-4891-9028-242de65a3b70
+/usr/share/installed-tests/fwupd/tests/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c
+/usr/share/installed-tests/fwupd/tests/efi/efivars/fwupd-ddc0ee61-e7f0-4e7d-acc5-c070a398838e-0-0abba7dc-e516-4167-bbf5-4d9d1c739416
 /usr/share/installed-tests/fwupd/tests/elantp.builder.xml
+/usr/share/installed-tests/fwupd/tests/elf.builder.xml
+/usr/share/installed-tests/fwupd/tests/fdt.builder.xml
+/usr/share/installed-tests/fwupd/tests/firmware.zip
+/usr/share/installed-tests/fwupd/tests/fit.builder.xml
+/usr/share/installed-tests/fwupd/tests/fmap-offset.builder.xml
+/usr/share/installed-tests/fwupd/tests/fmap.builder.xml
+/usr/share/installed-tests/fwupd/tests/hid-descriptor.builder.xml
+/usr/share/installed-tests/fwupd/tests/hid-descriptor2.builder.xml
+/usr/share/installed-tests/fwupd/tests/hid-report-item.builder.xml
+/usr/share/installed-tests/fwupd/tests/ifd-no-bios.builder.xml
+/usr/share/installed-tests/fwupd/tests/ifd.builder.xml
+/usr/share/installed-tests/fwupd/tests/ifwi-cpd.builder.xml
+/usr/share/installed-tests/fwupd/tests/ifwi-fpt.builder.xml
+/usr/share/installed-tests/fwupd/tests/ihex-signed.builder.xml
+/usr/share/installed-tests/fwupd/tests/ihex.builder.xml
+/usr/share/installed-tests/fwupd/tests/intel-thunderbolt.builder.xml
+/usr/share/installed-tests/fwupd/tests/linear.builder.xml
+/usr/share/installed-tests/fwupd/tests/localtime
+/usr/share/installed-tests/fwupd/tests/lockdown/locked/lockdown
+/usr/share/installed-tests/fwupd/tests/lockdown/none/lockdown
+/usr/share/installed-tests/fwupd/tests/metadata.xml
+/usr/share/installed-tests/fwupd/tests/oprom.builder.xml
+/usr/share/installed-tests/fwupd/tests/oui.txt
+/usr/share/installed-tests/fwupd/tests/pci.ids
+/usr/share/installed-tests/fwupd/tests/pefile.builder.xml
 /usr/share/installed-tests/fwupd/tests/pixart.builder.xml
-/usr/share/installed-tests/fwupd/tests/redfish-smbios.bin
+/usr/share/installed-tests/fwupd/tests/pnp.ids
+/usr/share/installed-tests/fwupd/tests/quirks.d/tests.quirk
+/usr/share/installed-tests/fwupd/tests/redfish-smbios.builder.xml
 /usr/share/installed-tests/fwupd/tests/redfish.conf
+/usr/share/installed-tests/fwupd/tests/sbatlevel.builder.xml
+/usr/share/installed-tests/fwupd/tests/srec-addr32.builder.xml
+/usr/share/installed-tests/fwupd/tests/srec.builder.xml
 /usr/share/installed-tests/fwupd/tests/synaptics-mst.builder.xml
 /usr/share/installed-tests/fwupd/tests/synaptics-prometheus.builder.xml
 /usr/share/installed-tests/fwupd/tests/synaptics-rmi-0x.builder.xml
 /usr/share/installed-tests/fwupd/tests/synaptics-rmi-10.builder.xml
+/usr/share/installed-tests/fwupd/tests/sys_vendor
 /usr/share/installed-tests/fwupd/tests/uf2.builder.xml
+/usr/share/installed-tests/fwupd/tests/usb.ids
+/usr/share/installed-tests/fwupd/tests/uswid-compressed.builder.xml
+/usr/share/installed-tests/fwupd/tests/uswid.builder.xml
 /usr/share/installed-tests/fwupd/tests/wacom-usb.builder.xml
 
 %files locales -f fwupd.lang

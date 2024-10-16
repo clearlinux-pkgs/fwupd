@@ -1,12 +1,11 @@
-1.9.25
+2.0.1
 bash-completion-dev
 curl-dev
 gi-docgen
 pkgconfig(bash-completion)
-pkgconfig(fwupd-efi)
 pkgconfig(jcat)
 pkgconfig(libcurl)
-pkgconfig(libdrm_amdgpu)
+pkgconfig(libdrm)
 pkgconfig(libprotobuf-c)
 pkgconfig(mbim-glib)
 pkgconfig(mm-glib)

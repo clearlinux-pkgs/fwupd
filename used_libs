@@ -1,14 +1,14 @@
 libarchive.so.13
 libc.so.6
 libcurl.so.4
+libdrm.so.2
+libdrm_amdgpu.so.1
 libgcc_s.so.1
 libgio-2.0.so.0
 libglib-2.0.so.0
 libgmodule-2.0.so.0
 libgnutls.so.30
 libgobject-2.0.so.0
-libgudev-1.0.so.0
-libgusb.so.2
 libjcat.so.1
 libjson-glib-1.0.so.0
 libmbim-glib.so.4
@@ -17,5 +17,6 @@ libpolkit-gobject-1.so.0
 libprotobuf-c.so.1
 libqmi-glib.so.5
 libsqlite3.so.0
+libusb-1.0.so.0
 libxmlb.so.2
 libz.so.1
