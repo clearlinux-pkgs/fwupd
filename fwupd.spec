@@ -9,7 +9,7 @@
 #
 Name     : fwupd
 Version  : 2.0.1
-Release  : 91
+Release  : 92
 URL      : https://github.com/fwupd/fwupd/releases/download/2.0.1/fwupd-2.0.1.tar.xz
 Source0  : https://github.com/fwupd/fwupd/releases/download/2.0.1/fwupd-2.0.1.tar.xz
 Source1  : fwupd.tmpfiles
